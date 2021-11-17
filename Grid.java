@@ -110,8 +110,17 @@ public class Grid {
         }
     }
 
-    private boolean tileIsInBounds(int x, int y) {
+    public boolean tileIsInBounds(int x, int y) {
         return ((0 <= x && x < n) && (0 <= y && y < n));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        
+        Grid otherGrid = (Grid) obj;
+        return true; // TODO
+        /* EDIT NOTE: need to fix this pa, maybe compare other grid's miner's location and front w/ this grid's location and front? */
     }
 
     /* EDIT NOTE: following 3 funcs are for debugging onli */
