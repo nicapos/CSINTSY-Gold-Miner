@@ -28,9 +28,57 @@ public class Miner {
         return col;
     }
 
-    public char scan(){
+    public char scan(Grid grid, int n){
         // based sa front, scan there
-        return '\0'; // no pot, gold, pit, beacon in the front
+        char closest = '0';
+        int pos = n;
+        switch(front){
+            case NORTH: 
+                for(int i = n; i > col; i--){
+                    if(grid.tileIsEmpty(row, i))
+                        ;
+                    else if(grid.getTerrain(row, i) != 0){
+                        if(col - i < pos){
+                            pos = col - i;
+                            closest = grid.getTerrain(row, i);
+                        }
+                    }
+                }
+                break;
+            case SOUTH: 
+                for(int i = col; i < n; i++){
+                    if(grid.tileIsEmpty(row, i))
+                        ;
+                    else if(grid.getTerrain(row, i) != 0){
+                        closest = grid.getTerrain(row, i);
+                        break;
+                    }
+                }
+                break;
+            case WEST: 
+                for(int i = n; i > row; i--){
+                    if(grid.tileIsEmpty(row, i))
+                        ;
+                    else if(grid.getTerrain(row, i) != 0){
+                        if(col - i < pos){
+                            pos = col - i;
+                            closest = grid.getTerrain(i, col);
+                        }
+                    }
+                }
+                break;
+            case EAST: 
+                for(int i = row; i < n; i++){
+                    if(grid.tileIsEmpty(row, i))
+                        ;
+                    else if(grid.getTerrain(row, i) != 0){
+                        closest = grid.getTerrain(i, col);
+                        break;
+                    }
+                }
+                break;
+        }
+        return closest; // no pot, gold, pit, beacon in the front
     }
 
     public void rotate(){ 
@@ -39,7 +87,6 @@ public class Miner {
             case SOUTH: front = Direction.WEST; break;
             case WEST: front = Direction.NORTH; break;
             case NORTH: front = Direction.EAST; break;
-            default: break;
         }
     }
 }

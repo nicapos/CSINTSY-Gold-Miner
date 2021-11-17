@@ -61,13 +61,15 @@ public class Grid {
 
     public ArrayList<Point> getBeacons() { return beacons; }
 
-    private boolean tileIsEmpty(int x, int y) {
+    public boolean tileIsEmpty(int x, int y) {
         try {
             return (grid[y][x] == 0);
         } catch (ArrayIndexOutOfBoundsException e) {
             return true;
         }
     }
+
+    public char getTerrain(int x, int y) { return grid[x][y]; }
 
     private void randomizeMap () {
         Random rand = new Random();
