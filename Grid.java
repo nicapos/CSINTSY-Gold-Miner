@@ -69,7 +69,7 @@ public class Grid {
         }
     }
 
-    public char getTerrain(int x, int y) { return grid[x][y]; }
+    public char getTerrain(int x, int y) { return grid[y][x]; }
 
     private void randomizeMap () {
         Random rand = new Random();
