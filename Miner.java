@@ -34,6 +34,14 @@ public class Miner {
         return col;
     }
 
+    public Direction getFront() {
+        return front;
+    }
+
+    public int getRotates() { return nRotates; }
+    public int getScans() { return nScans; }
+    public int getMoves() { return nMoves; }
+
     public void move() {
         switch(front){
             case EAST: col++; break;
@@ -44,10 +52,11 @@ public class Miner {
         nMoves++;
     }
 
-    public char scan(Grid grid, int n){
+    public char scan(Grid grid) {
         // based sa front, scan there
         char closest = '0';
-        int pos = n;
+        int n = grid.getSize();
+        int pos = grid.getSize();
         switch(front){
             case NORTH: 
                 for(int i = n; i > col; i--){
