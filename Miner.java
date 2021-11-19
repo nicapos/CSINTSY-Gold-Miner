@@ -2,14 +2,20 @@ import java.util.Random;
 
 public class Miner {
     private Direction front;
-    private int row;
-    private int col;
+    private int row; // = y
+    private int col; // = x
+
+    private int nRotates, nScans, nMoves;
 
     public Miner(){
         Random rnd = new Random();
         row = 0;
         col = 0;
         front = rnd.nextBoolean() ? Direction.SOUTH : Direction.EAST;
+
+        nRotates = 0;
+        nScans = 0;
+        nMoves = 0;
     }
 
     public void set_row(int row){
@@ -26,6 +32,16 @@ public class Miner {
 
     public int get_col(){
         return col;
+    }
+
+    public void move() {
+        switch(front){
+            case EAST: col++; break;
+            case SOUTH: row++; break;
+            case WEST: col--; break;
+            case NORTH: row--; break;
+        }
+        nMoves++;
     }
 
     public char scan(Grid grid, int n){
@@ -78,6 +94,7 @@ public class Miner {
                 }
                 break;
         }
+        nScans++;
         return closest; // no pot, gold, pit, beacon in the front
     }
 
@@ -88,5 +105,6 @@ public class Miner {
             case WEST: front = Direction.NORTH; break;
             case NORTH: front = Direction.EAST; break;
         }
+        nRotates++;
     }
 }
