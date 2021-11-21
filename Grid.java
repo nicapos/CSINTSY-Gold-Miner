@@ -1,23 +1,14 @@
 import java.util.Random;
-import java.awt.Point;
-import java.util.ArrayList;
 
 public class Grid {
     private char[][] grid;
     private int n;
-
-    private Point gold;
-    private ArrayList<Point> pits;
-    private ArrayList<Point> beacons;
 
     private int nGoldLeft, nPitsLeft, nBeaconsLeft;
 
     public Grid (int size, boolean randomMap) {
         this.n = size;
         grid = new char[n][n];
-
-        pits = new ArrayList<Point>();
-        beacons = new ArrayList<Point>();
 
         nGoldLeft = 1;
         nPitsLeft = (int)(n * 0.25);
@@ -29,47 +20,38 @@ public class Grid {
             randomizeMap();
     }
 
-    public void addPit(int x, int y) {
+    public void addPit(int col, int row) {
         if (nPitsLeft > 0) {
-            grid[y][x] = 'P';
-            pits.add(new Point(x,y));
+            grid[row][col] = 'P';
             nPitsLeft--;
         }
     }
 
-    public void addBeacon(int x, int y) {
+    public void addBeacon(int col, int row) {
         if (nBeaconsLeft > 0) {
-            grid[y][x] = 'B';
-            beacons.add(new Point(x,y));
+            grid[row][col] = 'B';
             nBeaconsLeft--;
         }
     }
 
-    public void addGold(int x, int y) {
+    public void addGold(int col, int row) {
         if (nGoldLeft > 0) {
-            grid[y][x] = 'G';
-            gold = new Point(x,y);
+            grid[row][col] = 'G';
             nGoldLeft--;
         }
     }
 
     public int getSize() { return n; }
 
-    public Point getGold() { return gold; }
-
-    public ArrayList<Point> getPits() { return pits; }
-
-    public ArrayList<Point> getBeacons() { return beacons; }
-
-    public boolean tileIsEmpty(int x, int y) {
+    public boolean tileIsEmpty(int col, int row) {
         try {
-            return (grid[y][x] == 0);
+            return (grid[row][col] == 0);
         } catch (ArrayIndexOutOfBoundsException e) {
             return true;
         }
     }
 
-    public char getTerrain(int x, int y) { return grid[y][x]; }
+    public char getTerrain(int col, int row) { return grid[row][col]; }
 
     private void randomizeMap () {
         Random rand = new Random();
@@ -112,27 +94,31 @@ public class Grid {
         }
     }
 
-    public boolean tileIsInBounds(int x, int y) {
-        return ((0 <= x && x < n) && (0 <= y && y < n));
+    public boolean tileIsInBounds(int row, int col) {
+        return ((0 <= row && row < n) && (0 <= col && col < n));
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        
-        Grid otherGrid = (Grid) obj;
-        return true; // TODO
-        /* EDIT NOTE: need to fix this pa, maybe compare other grid's miner's location and front w/ this grid's location and front? */
-    }
-
-    /* EDIT NOTE: following 3 funcs are for debugging onli */
-    public void printGrid() {
-        for (int x = 0; x < n; x++) {
-            for (int y = 0; y < n; y++) {
-                if (grid[x][y] == 0)
+    public void printGrid() { // 
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                if (grid[row][col] == 0)
                     System.out.print("·");
                 else
-                    System.out.print(grid[x][y]);
+                    System.out.print(grid[row][col]);
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public void printGrid(Miner miner) { // 
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                if (miner.get_col() == col && miner.get_row() == row)
+                    System.out.print('M'); 
+                else if (grid[row][col] == 0)
+                    System.out.print("·");
+                else
+                    System.out.print(grid[row][col]);
             }
             System.out.print("\n");
         }

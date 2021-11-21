@@ -11,7 +11,8 @@ public class Miner {
         Random rnd = new Random();
         row = 0;
         col = 0;
-        front = rnd.nextBoolean() ? Direction.SOUTH : Direction.EAST;
+        //front = rnd.nextBoolean() ? Direction.SOUTH : Direction.EAST; // commented out temporarily for driver test lang
+        front = Direction.EAST;
 
         nRotates = 0;
         nScans = 0;
