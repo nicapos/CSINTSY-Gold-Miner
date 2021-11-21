@@ -5,7 +5,7 @@ public class Miner {
     private int row; // = y
     private int col; // = x
 
-    private int nRotates, nScans, nMoves;
+    private static int nRotates, nScans, nMoves;
 
     public Miner(){
         Random rnd = new Random();
@@ -57,22 +57,29 @@ public class Miner {
         // based sa front, scan there
         char closest = '0';
         int n = grid.getSize();
-        int pos = grid.getSize();
         switch(front){
             case NORTH: 
-                for(int i = n; i > col; i--){
-                    if(grid.tileIsEmpty(row, i))
+                for(int i = n; i > row; i--){
+                    if(grid.tileIsEmpty(i, col))
                         ;
-                    else if(grid.getTerrain(row, i) != 0){
-                        if(col - i < pos){
-                            pos = col - i;
-                            closest = grid.getTerrain(row, i);
-                        }
+                    else if(grid.getTerrain(i, col) != 0){
+                        closest = grid.getTerrain(i, col);
+                        break;
                     }
                 }
                 break;
             case SOUTH: 
-                for(int i = col; i < n; i++){
+                for(int i = row; i < n; i++){
+                    if(grid.tileIsEmpty(i, col))
+                        ;
+                    else if(grid.getTerrain(i, col) != 0){
+                        closest = grid.getTerrain(i, col);
+                        break;
+                    }
+                }
+                break;
+            case WEST: 
+                for(int i = n; i > col; i--){
                     if(grid.tileIsEmpty(row, i))
                         ;
                     else if(grid.getTerrain(row, i) != 0){
@@ -81,24 +88,12 @@ public class Miner {
                     }
                 }
                 break;
-            case WEST: 
-                for(int i = n; i > row; i--){
-                    if(grid.tileIsEmpty(row, i))
-                        ;
-                    else if(grid.getTerrain(row, i) != 0){
-                        if(col - i < pos){
-                            pos = col - i;
-                            closest = grid.getTerrain(i, col);
-                        }
-                    }
-                }
-                break;
             case EAST: 
-                for(int i = row; i < n; i++){
+                for(int i = col; i < n; i++){
                     if(grid.tileIsEmpty(row, i))
                         ;
                     else if(grid.getTerrain(row, i) != 0){
-                        closest = grid.getTerrain(i, col);
+                        closest = grid.getTerrain(row, i);
                         break;
                     }
                 }

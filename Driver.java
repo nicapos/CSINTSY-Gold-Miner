@@ -14,11 +14,11 @@ public class Driver {
         System.out.println();
 
         System.out.println("Move 4x. (front: "+miner.getFront()+")");
+        miner.move();
+        miner.move();
+        miner.move();
+        miner.move();
         System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        miner.move();
-        miner.move();
-        miner.move();
-        miner.move();
         map.printGrid(miner);
         System.out.println();
 
