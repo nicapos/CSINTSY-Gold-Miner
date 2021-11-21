@@ -7,12 +7,13 @@ public class Driver {
         map.addPit(5, 2);
 
         Miner miner = new Miner();
-        System.out.println("miner.front: " + miner.getFront());
+        System.out.println("Initial front: "+miner.getFront());
         if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
         else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
         map.printGrid(miner);
         System.out.println();
 
+        System.out.println("Move 4x. (front: "+miner.getFront()+")");
         miner.move();
         miner.move();
         miner.move();
@@ -20,7 +21,12 @@ public class Driver {
         map.printGrid(miner);
         System.out.println();
 
+        System.out.println("Rotate 1x. (New front: "+miner.getFront()+")");
         miner.rotate();
+        if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
+        else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
+
+        System.out.println("Move 3x.");
         miner.move();
         miner.move();
         miner.move();
