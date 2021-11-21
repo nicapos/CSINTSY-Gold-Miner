@@ -42,7 +42,7 @@ public class Driver {
         miner.rotate();
         System.out.println("New front: "+miner.getFront());
         System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid();
+        map.printGrid(miner);
         if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
         else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
 
@@ -52,7 +52,7 @@ public class Driver {
         miner.rotate();
         System.out.println("New front: "+miner.getFront());
         System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid();
+        map.printGrid(miner);
         if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
         else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
     }

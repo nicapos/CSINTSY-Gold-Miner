@@ -59,41 +59,41 @@ public class Miner {
         int n = grid.getSize();
         switch(front){
             case NORTH: 
-                for(int i = n; i > row; i--){
-                    if(grid.tileIsEmpty(i, col))
+                for(int i = n-1; i > row; i--){
+                    if(grid.tileIsEmpty(col, i))
                         ;
-                    else if(grid.getTerrain(i, col) != 0){
-                        closest = grid.getTerrain(i, col);
+                    else if(grid.getTerrain(col, i) != 0){
+                        closest = grid.getTerrain(col, i);
                         break;
                     }
                 }
                 break;
             case SOUTH: 
                 for(int i = row; i < n; i++){
-                    if(grid.tileIsEmpty(i, col))
+                    if(grid.tileIsEmpty(col, i))
                         ;
-                    else if(grid.getTerrain(i, col) != 0){
-                        closest = grid.getTerrain(i, col);
+                    else if(grid.getTerrain(col, i) != 0){
+                        closest = grid.getTerrain(col, i);
                         break;
                     }
                 }
                 break;
             case WEST: 
                 for(int i = n; i > col; i--){
-                    if(grid.tileIsEmpty(row, i))
+                    if(grid.tileIsEmpty(i, row))
                         ;
-                    else if(grid.getTerrain(row, i) != 0){
-                        closest = grid.getTerrain(row, i);
+                    else if(grid.getTerrain(i, row) != 0){
+                        closest = grid.getTerrain(i, row);
                         break;
                     }
                 }
                 break;
             case EAST: 
                 for(int i = col; i < n; i++){
-                    if(grid.tileIsEmpty(row, i))
+                    if(grid.tileIsEmpty(i, row))
                         ;
-                    else if(grid.getTerrain(row, i) != 0){
-                        closest = grid.getTerrain(row, i);
+                    else if(grid.getTerrain(i, row) != 0){
+                        closest = grid.getTerrain(i, row);
                         break;
                     }
                 }
