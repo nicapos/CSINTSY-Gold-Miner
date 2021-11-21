@@ -21,8 +21,8 @@ public class Driver {
         map.printGrid(miner);
         System.out.println();
 
-        System.out.println("Rotate 1x. (New front: "+miner.getFront()+")");
         miner.rotate();
+        System.out.println("Rotate 1x. (New front: "+miner.getFront()+")");
         if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
         else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
 
