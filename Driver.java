@@ -14,6 +14,7 @@ public class Driver {
         System.out.println();
 
         System.out.println("Move 4x. (front: "+miner.getFront()+")");
+        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
         miner.move();
         miner.move();
         miner.move();
@@ -23,6 +24,7 @@ public class Driver {
 
         miner.rotate();
         System.out.println("Rotate 1x. (New front: "+miner.getFront()+")");
+        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
         if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
         else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
 
@@ -30,6 +32,7 @@ public class Driver {
         miner.move();
         miner.move();
         miner.move();
+        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
         map.printGrid(miner);
     }
 }
