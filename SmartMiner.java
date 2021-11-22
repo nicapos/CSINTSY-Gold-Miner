@@ -17,8 +17,9 @@ public class SmartMiner extends Miner {
     public void startSearch() { // automatic search until miner finds gold;
         Node search;
         Node previous = new Node(0, 0, this.getFront());
+        int MAX_DEPTH = envGrid.getSize() * (envGrid.getSize()/2); // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
 
-        while (!bMetGoal) {
+        while (!bMetGoal && MAX_DEPTH > 0) {
             search = getNextMove(previous);
             // rotate to the direction of search then move
             while ( this.getFront() != search.getFront() )
@@ -31,6 +32,7 @@ public class SmartMiner extends Miner {
                 envGrid.printGrid(this); // print current state
                 System.out.println();
             }
+            MAX_DEPTH--;
         }
 
         if (previous.getTerrain() == 'G')

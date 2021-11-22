@@ -65,9 +65,6 @@ public class Grid {
     private void randomizeMap () {
         Random rand = new Random();
 
-        // Initialize location of miner
-        grid[0][0] = 'M';
-
         // Initialize location of pot of gold
         int goldX, goldY;
         do {
