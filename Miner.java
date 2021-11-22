@@ -55,7 +55,7 @@ public class Miner {
 
     public char scan(Grid grid) {
         // based sa front, scan there
-        char closest = '0';
+        char closest = 0;
         int n = grid.getSize();
         switch(front){
             case NORTH: 
@@ -69,7 +69,7 @@ public class Miner {
                 }
                 break;
             case SOUTH: 
-                for(int i = row; i < n; i++){
+                for(int i = row+1; i < n; i++){
                     if(grid.tileIsEmpty(col, i))
                         ;
                     else if(grid.getTerrain(col, i) != 0){
@@ -79,7 +79,7 @@ public class Miner {
                 }
                 break;
             case WEST: 
-                for(int i = n; i > col; i--){
+                for(int i = n-1; i > col; i--){
                     if(grid.tileIsEmpty(i, row))
                         ;
                     else if(grid.getTerrain(i, row) != 0){
@@ -89,7 +89,7 @@ public class Miner {
                 }
                 break;
             case EAST: 
-                for(int i = col; i < n; i++){
+                for(int i = col+1; i < n; i++){
                     if(grid.tileIsEmpty(i, row))
                         ;
                     else if(grid.getTerrain(i, row) != 0){

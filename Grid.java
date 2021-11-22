@@ -7,7 +7,13 @@ public class Grid {
     private int nGoldLeft, nPitsLeft, nBeaconsLeft;
 
     public Grid (int size, boolean randomMap) {
-        this.n = size;
+        if (n < 8)
+            this.n = 8;
+        else if (n > 64)
+            this.n = 64;
+        else
+            this.n = size;
+
         grid = new char[n][n];
 
         nGoldLeft = 1;
@@ -51,7 +57,10 @@ public class Grid {
         }
     }
 
-    public char getTerrain(int col, int row) { return grid[row][col]; }
+    public char getTerrain(int col, int row) { 
+        if (tileIsEmpty(col, row)) return 0;
+        return grid[row][col];
+    }
 
     private void randomizeMap () {
         Random rand = new Random();
@@ -114,6 +123,20 @@ public class Grid {
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
                 if (miner.get_col() == col && miner.get_row() == row)
+                    System.out.print('M'); 
+                else if (grid[row][col] == 0)
+                    System.out.print("·");
+                else
+                    System.out.print(grid[row][col]);
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public void printGrid(Node step) { // 
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                if (step.getCol() == col && step.getRow() == row)
                     System.out.print('M'); 
                 else if (grid[row][col] == 0)
                     System.out.print("·");
