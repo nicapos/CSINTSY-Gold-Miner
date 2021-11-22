@@ -1,59 +1,15 @@
 public class Driver {
     public static void main (String[] args) {
-        Grid map = new Grid(8, false); // parameter: n
+        Grid map = new Grid(8, false);
         map.addGold(4, 3);
         map.addBeacon(5, 5);
         map.addPit(0, 4);
         map.addPit(5, 2);
+        
+        map.printGrid();
+        System.out.println("\n");
 
-        Miner miner = new Miner();
-        System.out.println("Initial front: "+miner.getFront());
-        if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
-        else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
-        map.printGrid(miner);
-        System.out.println();
-
-        System.out.println("Move 4x. (front: "+miner.getFront()+")");
-        miner.move();
-        miner.move();
-        miner.move();
-        miner.move();
-        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid(miner);
-        System.out.println();
-
-        miner.rotate();
-        System.out.println("Rotate 1x. (New front: "+miner.getFront()+")");
-        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
-        else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
-
-        System.out.println("Move 3x.");
-        miner.move();
-        miner.move();
-        miner.move();
-        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid(miner);
-
-        System.out.println();
-        System.out.println("Rotate 3x");
-        miner.rotate();
-        miner.rotate();
-        miner.rotate();
-        System.out.println("New front: "+miner.getFront());
-        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid(miner);
-        if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
-        else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
-
-        System.out.println();
-        System.out.println("Move 1x, Rotate 1x");
-        miner.move();
-        miner.rotate();
-        System.out.println("New front: "+miner.getFront());
-        System.out.println("Miner (row,col): (" + miner.get_row() + ", " + miner.get_col() + ")");
-        map.printGrid(miner);
-        if (miner.scan(map) == 0)   System.out.println("miner.scan(): NULL\n");
-        else                        System.out.println("miner.scan(): " + miner.scan(map) + "\n");
+        SmartMiner miner = new SmartMiner(map);
+        miner.startSearch();
     }
 }
