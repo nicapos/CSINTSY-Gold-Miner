@@ -38,6 +38,7 @@ public class SmartMiner extends Miner {
             MAX_DEPTH--;
         }
 
+        System.out.println("Rotates: "+this.getRotates()+", Scans: "+this.getScans()+", Moves: "+this.getMoves());
         if (previous.getTerrain() == 'G')
             System.out.println("Search successful");
         else if (previous.getTerrain() == 'P')
@@ -79,10 +80,14 @@ public class SmartMiner extends Miner {
             Node child = parent.createChild(this.getFront());
 
             /* scan and add to possible moves only if possible move is in bounds AND is not in the direction opposite to the parent Node's front */
-            if ( envGrid.tileIsInBounds(child.getRow(), child.getCol()) && child.getFront() != getOpposite(parent.getFront()) ) {
-                char cScan = this.scan(envGrid);
-                child.setScan(cScan);
-                children.add(child);
+            if ( envGrid.tileIsInBounds(child.getRow(), child.getCol()) ) {
+                if (child.getFront() != getOpposite(parent.getFront()) ) {
+                    char cScan = this.scan(envGrid);
+                    child.setScan(cScan);
+                    children.add(child);
+                }
+            } else if ( child.getFront() == parent.getFront() ) {
+                parent.setTerrain(parent.getScan());
             }
             this.rotate();
         }
@@ -116,7 +121,7 @@ public class SmartMiner extends Miner {
      * @return the best node based on direction
      */
     private Node filterByDirection(ArrayList<Node> candidates) {
-        Direction dBest = Direction.NORTH;
+        Direction dBest = null;
         for (Node candidate: candidates)
             if ( getPriority( candidate.getFront() ) > getPriority(dBest) )
                 dBest = candidate.getFront();
@@ -128,6 +133,7 @@ public class SmartMiner extends Miner {
     }
 
     private int getPriority (Direction direction) {
+        if (direction == null)  return 0;
         switch (direction) {
             case EAST:  return 4;
             case SOUTH: return 3;
