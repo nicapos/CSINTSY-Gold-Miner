@@ -7,9 +7,9 @@ public class Grid {
     private int nGoldLeft, nPitsLeft, nBeaconsLeft;
 
     public Grid (int size, boolean randomMap) {
-        if (n < 8)
+        if (size < 8)
             this.n = 8;
-        else if (n > 64)
+        else if (size > 64)
             this.n = 64;
         else
             this.n = size;

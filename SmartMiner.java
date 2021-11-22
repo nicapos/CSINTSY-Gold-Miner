@@ -19,6 +19,9 @@ public class SmartMiner extends Miner {
         Node previous = new Node(0, 0, this.getFront());
         int MAX_DEPTH = envGrid.getSize() * (envGrid.getSize()/2); // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
 
+        envGrid.printGrid(this); // print current state
+        System.out.println();
+
         while (!bMetGoal && MAX_DEPTH > 0) {
             search = getNextMove(previous);
             // rotate to the direction of search then move
@@ -48,17 +51,17 @@ public class SmartMiner extends Miner {
 
         ArrayList<Node> possibleMoves = createChildren(previous);
         Node nextMove;
-
+        System.out.println("1: " + possibleMoves);
         /* if there's more than one candidate for next move, only keep the most optimal move. (best case: 1 left, worst case: 3 left) */
         if (possibleMoves.size() > 1)
             possibleMoves = filterByScan(possibleMoves);
-
+        System.out.println("2: " + possibleMoves);
         /* if there's more than one candidate for next move, only keep the most optimal direction (best case: 1 left, worst case: 0 left) */
         if (possibleMoves.size() > 1)
             nextMove = filterByDirection(possibleMoves);
         else
             nextMove = possibleMoves.get(0);
-
+        System.out.println("3: " + nextMove);
         return nextMove;
     }
 

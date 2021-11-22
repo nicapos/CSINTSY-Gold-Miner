@@ -36,9 +36,12 @@ public class Node {
     public void setScan(char scanResult) {
         this.cScan = scanResult;
 
-        if (this.moveFront == parent.getFront())
+        if (this.moveFront == parent.getFront()) {
             if (this.cScan != parent.getScan())
                 parent.setTerrain(parent.getScan());
+            else
+                parent.setTerrain((char)0);
+        }
     }
 
     public void setTerrain(char cTerrain) {
@@ -79,9 +82,9 @@ public class Node {
 
     @Override
     public String toString() {
-        if (this.getScan() == 0)         return "Move " + moveFront + " to (" + col + "," + row + "). scan=0";
-        if (this.getScan() == '0')       return "Move " + moveFront + " to (" + col + "," + row + "). scan='0'";
-        return "Move " + moveFront + " to (" + col + "," + row + "). scan=" + cScan;
+        if (this.getScan() == 0)         return moveFront + "=0";
+        if (this.getScan() == '0')       return moveFront + "='0'";
+        return moveFront + "=" + cScan;
     }
 
 }
