@@ -1,3 +1,4 @@
+package Model;
 import java.util.Random;
 
 public class Grid {
@@ -60,6 +61,11 @@ public class Grid {
     public char getTerrain(int col, int row) { 
         if (tileIsEmpty(col, row)) return 0;
         return grid[row][col];
+    }
+
+    public char[][] getMap()
+    {
+        return this.grid;
     }
 
     private void randomizeMap () {
