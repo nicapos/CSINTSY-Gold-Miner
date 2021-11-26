@@ -51,13 +51,15 @@ public class SmartMiner extends Miner {
     public Node getNextMove(Node previous) {
         if (bMetGoal)   return null;
 
-        ArrayList<Node> possibleMoves = createChildren(previous);
+        ArrayList<Node> possibleMoves = createSuccessors(previous);
         Node nextMove;
         System.out.println("1: " + possibleMoves);
+
         /* if there's more than one candidate for next move, only keep the most optimal move. (best case: 1 left, worst case: 3 left) */
         if (possibleMoves.size() > 1)
             possibleMoves = filterByScan(possibleMoves);
         System.out.println("2: " + possibleMoves);
+        
         /* if there's more than one candidate for next move, only keep the most optimal direction (best case: 1 left, worst case: 0 left) */
         if (possibleMoves.size() > 1)
             nextMove = filterByDirection(possibleMoves);
@@ -74,8 +76,8 @@ public class SmartMiner extends Miner {
      * @param parent 
      * @return an ArrayList of possible moves based on the parent Node
      */
-    private ArrayList<Node> createChildren(Node parent) {
-        ArrayList<Node> children = new ArrayList<Node>();
+    private ArrayList<Node> createSuccessors(Node parent) {
+        ArrayList<Node> successors = new ArrayList<Node>();
 
         for (int i = 0; i < 4; i++) {
             Node child = parent.createChild(this.getFront());
@@ -85,7 +87,7 @@ public class SmartMiner extends Miner {
                 if (child.getFront() != getOpposite(parent.getFront()) ) {
                     char cScan = this.scan(envGrid);
                     child.setScan(cScan);
-                    children.add(child);
+                    successors.add(child);
                 }
             } else if ( child.getFront() == parent.getFront() ) {
                 parent.setTerrain(parent.getScan());
@@ -93,7 +95,7 @@ public class SmartMiner extends Miner {
             this.rotate();
         }
 
-        return children;
+        return successors;
     }
 
     /**
