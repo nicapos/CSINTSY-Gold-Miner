@@ -16,7 +16,7 @@ public class RandomMiner extends Miner{
         Node previous = new Node(0, 0, this.getFront());
         int MAX_DEPTH = envGrid.getSize() * (envGrid.getSize()/2); // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
         while(bAlive && !bMetGoal && MAX_DEPTH > 0){
-            int action = rand.nextInt(3);
+            int action = rand.nextInt() % 3;
             switch(action){
                 case 0: move();
                 case 1: rotate();
