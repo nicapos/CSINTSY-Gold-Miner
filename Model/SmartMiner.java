@@ -3,14 +3,13 @@ import java.util.ArrayList;
 
 public class SmartMiner extends Miner {
     private Grid envGrid; // = environment, will only be used for scan; not the miner's copy of what it knows abt the environment
-
     private ArrayList<Node> moves;
     private boolean bMetGoal;
 
-    public SmartMiner (Grid environment) {
-        envGrid = environment;
+    public SmartMiner (Grid env) {
         moves = new ArrayList<Node>();
         bMetGoal = false;
+        this.envGrid = env;
     }
 
     public ArrayList<Node> getSearchMoves() { return moves; }
@@ -18,7 +17,7 @@ public class SmartMiner extends Miner {
     public void startSearch() { // automatic search until miner finds gold;
         Node search;
         Node previous = new Node(0, 0, this.getFront());
-        int MAX_DEPTH = envGrid.getSize() * (envGrid.getSize()/2); // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
+        int MAX_DEPTH = this.envGrid.getSize() * 2; // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
 
         envGrid.printGrid(this); // print current state
         System.out.println();

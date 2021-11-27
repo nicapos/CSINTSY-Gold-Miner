@@ -2,7 +2,9 @@ import Model.Direction;
 import Model.Grid;
 import Model.RandomMiner;
 import Model.SmartMiner;
+import Model.State;
 import View.MainFrame;
+import java.util.ArrayList;
 
 public class Driver {
     public static void main (String[] args) {
@@ -24,10 +26,24 @@ public class Driver {
         if(mode == "smart"){
             SmartMiner miner = new SmartMiner(map);
             miner.startSearch();
+
+            // DEBUG: Testing if States work. Print 1st, 2nd to the last, and last State
+            System.out.println("\nDEBUGGING STATES: ");
+            ArrayList<State> states = miner.getStates();
+            System.out.println("states.get(0)   = " + states.get(0));
+            System.out.println("states.get(n-2) = " + states.get(states.size()-2));
+            System.out.println("states.get(n-1) = " + states.get(states.size()-1));
         }
         else if (mode == "random"){
             RandomMiner miner = new RandomMiner(map);
             miner.startSearch();
+
+            // DEBUG: Testing if States work. Print 1st, 2nd to the last, and last State
+            System.out.println("\nDEBUGGING STATES: ");
+            ArrayList<State> states = miner.getStates();
+            System.out.println("states.get(0)   = " + states.get(0));
+            System.out.println("states.get(n-2) = " + states.get(states.size()-2));
+            System.out.println("states.get(n-1) = " + states.get(states.size()-1));
         }
     }
 }

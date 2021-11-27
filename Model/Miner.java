@@ -1,5 +1,6 @@
 package Model;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Miner {
     private Direction front;
@@ -7,6 +8,8 @@ public class Miner {
     private int col; // = x
 
     private static int nRotates, nScans, nMoves;
+
+    private ArrayList<State> states;
 
     public Miner(){
         Random rnd = new Random();
@@ -17,6 +20,9 @@ public class Miner {
         nRotates = 0;
         nScans = 0;
         nMoves = 0;
+
+        states = new ArrayList<State>(); 
+        addCurrentState(); 
     }
 
     public void set_row(int row){
@@ -39,6 +45,13 @@ public class Miner {
         return front;
     }
 
+    public ArrayList<State> getStates() { return states; }
+
+    private void addCurrentState() {
+        State newState = new State(this.row, this.col, this.front);
+        this.states.add(newState);
+    }
+
     public int getRotates() { return nRotates; }
     public int getScans() { return nScans; }
     public int getMoves() { return nMoves; }
@@ -51,6 +64,7 @@ public class Miner {
             case NORTH: row--; break;
         }
         nMoves++;
+        addCurrentState();
     }
 
     public char scan(Grid grid) {
@@ -111,5 +125,6 @@ public class Miner {
             case NORTH: front = Direction.EAST; break;
         }
         nRotates++;
+        addCurrentState();
     }
 }

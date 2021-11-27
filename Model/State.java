@@ -17,5 +17,8 @@ public class State {
 
     public Direction getFront() { return this.front; }
 
-    public char[][] getGrid() { return this.grid; }
+    @Override
+    public String toString() {
+        return "row: " + row + ", col: " + col + ", front: " + front;
+    }
 }
