@@ -1,8 +1,9 @@
 package Model;
 
 public class State {
-    private int row, col;
+    private int row, col; // current row & col of miner
     private Direction front;
+    private char[][] grid;
 
     public State (int row, int col, Direction front) {
         this.row = row;
@@ -15,4 +16,6 @@ public class State {
     public int getCol() { return this.col; }
 
     public Direction getFront() { return this.front; }
+
+    public char[][] getGrid() { return this.grid; }
 }
