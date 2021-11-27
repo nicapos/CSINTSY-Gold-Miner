@@ -1,7 +1,7 @@
 import Model.Direction;
 import Model.Grid;
 import Model.SmartMiner;
-import View.*;
+import View.MainFrame;
 
 public class Driver {
     public static void main (String[] args) {
@@ -14,10 +14,9 @@ public class Driver {
         
         map.printGrid();
         System.out.println("\n");
-        
+
         //trial
-        MainFrame game = new MainFrame(8);
-        game.initializeTiles(map.getMap(), Direction.EAST);
+        MainFrame game = new MainFrame(8, map.getMap(), Direction.NORTH);
 
         SmartMiner miner = new SmartMiner(map);
         miner.startSearch();
