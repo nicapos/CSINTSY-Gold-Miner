@@ -1,5 +1,6 @@
 import Model.Direction;
 import Model.Grid;
+import Model.RandomMiner;
 import Model.SmartMiner;
 import View.MainFrame;
 
@@ -18,7 +19,15 @@ public class Driver {
         //trial
         MainFrame game = new MainFrame(8, map.getMap(), Direction.NORTH);
 
-        SmartMiner miner = new SmartMiner(map);
-        miner.startSearch();
+        String mode = "smart";
+
+        if(mode == "smart"){
+            SmartMiner miner = new SmartMiner(map);
+            miner.startSearch();
+        }
+        else if (mode == "random"){
+            RandomMiner miner = new RandomMiner(map);
+            miner.startSearch();
+        }
     }
 }
