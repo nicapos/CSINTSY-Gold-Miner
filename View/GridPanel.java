@@ -1,8 +1,6 @@
 package View;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
+import javax.swing.*;
+import java.awt.*;
 import Model.Direction;
 
 public class GridPanel extends JPanel {
@@ -13,29 +11,30 @@ public class GridPanel extends JPanel {
     private JLabel gridBg;
     private int n;
 
-    public GridPanel(int n)
+    public GridPanel(int n, char[][] terrain, Direction front)
     {   
         this.n = n;
         this.gridBg = new JLabel();
-        this.setSize(n*64, n*64);
+        this.setSize(n*TILE_SIZE, n*TILE_SIZE);
         this.setLayout(null);
         tiles = new JLabel[n][n];
         miner = new JLabel();
+
+        initializeTiles(terrain, front);
     }
     
-    public void initializeTiles(char[][] terrain, Direction front)
+    private void initializeTiles(char[][] terrain, Direction front)
     {
         this.miner(front, 0,0);
         for(int x = 0; x < n; x++)
             for(int y = 0; y < n; y++)
             {
-                this.addTile(terrain[x][y], x, y);
+                this.addTile(terrain[y][x], x, y);
 
                 gridBg = new JLabel(new ImageIcon("img/D.png"));
                 gridBg.setBounds(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 this.add(gridBg);
             }
-        System.out.println(front);
     }
 
     public void addTile(char type, int x, int y)
@@ -58,6 +57,17 @@ public class GridPanel extends JPanel {
         } catch (ArrayIndexOutOfBoundsException E) {
             System.out.println("ERROR: x or y out of range.");
         }
+    }
+
+    public void updateMiner(char action, Direction front, int x, int y)
+    {
+        if(action == 'M')
+            miner.setIcon(new ImageIcon("img/Miner/"+front+".png"));
+        else if(action == 'S')
+            miner.setIcon(new ImageIcon("img/Miner/Scan"+front+".png"));
+        miner.setSize(TILE_SIZE, TILE_SIZE);
+        miner.setLocation(x*TILE_SIZE, y*TILE_SIZE);
+
     }
 
 }

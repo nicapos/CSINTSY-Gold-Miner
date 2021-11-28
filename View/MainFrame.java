@@ -4,24 +4,16 @@ import javax.swing.JPanel;
 
 import Model.Direction;
 
-public class MainFrame {
-    private JFrame gameFrame;
-    private GridPanel gridLayer;
-    private JPanel menuPanel;
+public class MainFrame extends JFrame{
     private int n;
+    private static final int TILE_SIZE = 64;
 
-    public MainFrame(int n, char[][]terrain, Direction front)
+    public MainFrame(int n)
     {
         this.n = n;
-        gameFrame = new JFrame("Gold Miner");
-        gameFrame.setSize(900,900);
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.setVisible(true);
-
-        gridLayer = new GridPanel(n);
-        gridLayer.initializeTiles(terrain, front);
-
-        gameFrame.add(gridLayer);
-        gameFrame.validate();
+        this.setTitle("Gold Miner");
+        this.setSize(n*TILE_SIZE, n*TILE_SIZE+30);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 }

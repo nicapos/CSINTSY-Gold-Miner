@@ -9,7 +9,7 @@ public class Miner {
 
     private static int nRotates, nScans, nMoves;
 
-    private ArrayList<State> states;
+    private ArrayList<Action> states;
 
     public Miner(){
         Random rnd = new Random();
@@ -21,7 +21,7 @@ public class Miner {
         nScans = 0;
         nMoves = 0;
 
-        states = new ArrayList<State>(); 
+        states = new ArrayList<Action>(); 
         addCurrentState(); 
     }
 
@@ -45,10 +45,10 @@ public class Miner {
         return front;
     }
 
-    public ArrayList<State> getStates() { return states; }
+    public ArrayList<Action> getStates() { return states; }
 
     private void addCurrentState() {
-        State newState = new State(this.row, this.col, this.front);
+        Action newState = new Action(this.row, this.col, this.front);
         this.states.add(newState);
     }
 

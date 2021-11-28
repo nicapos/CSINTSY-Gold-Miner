@@ -1,11 +1,11 @@
 package Model;
 
-public class State {
+public class Action {
     private int row, col; // current row & col of miner
     private Direction front;
     private char[][] grid;
 
-    public State (int row, int col, Direction front) {
+    public Action (int row, int col, Direction front) {
         this.row = row;
         this.col = col;
         this.front = front;
