@@ -12,7 +12,7 @@ public class GridPanel extends JPanel {
     private JLabel gridBg;
     private int n;
 
-    public GridPanel(int n, char[][] terrain, Direction front, GameController mainGame)
+    public GridPanel(int n, char[][] terrain, Direction front)
     {   
         this.n = n;
         this.gridBg = new JLabel();

@@ -14,13 +14,15 @@ public class GameController {
     private GridPanel gridLayer;
     private MenuPanel menuLayer;  
     private char mode;
+    private int n;
 
-    public GameController()
+    public GameController(int inputN)
     {
-        environment = new Grid(8, true);
+        this.n = inputN;
+        environment = new Grid(n, true);
 
-        mainLayer = new MainFrame(8);
-        menuLayer = new MenuPanel(8, this);
+        mainLayer = new MainFrame(n);
+        menuLayer = new MenuPanel(n, this);
 
         //mainLayer.add(menuLayer); wala munang menu button kasi nagloloko
         
@@ -58,7 +60,7 @@ public class GameController {
         {
             smartMode = new SmartMiner(environment);
             smartMode.startSearch();
-            gridLayer = new GridPanel(8, environment.getMap(), smartMode.getFront(),this);
+            gridLayer = new GridPanel(n, environment.getMap(), smartMode.getFront());
 
             mainLayer.add(gridLayer);
             mainLayer.validate();
@@ -69,18 +71,18 @@ public class GameController {
         {
             randomMode = new RandomMiner(environment);
             randomMode.startSearch();
-            gridLayer = new GridPanel(8, environment.getMap(), randomMode.getFront(),this);
+            gridLayer = new GridPanel(n, environment.getMap(), randomMode.getFront());
             
             mainLayer.add(gridLayer);
             mainLayer.validate();
 
-            //updateView(randomMode.getStates());
+            updateView(randomMode.getStates());
         } 
     }
 
 
     public static void main(String[] args) {
-        GameController myGame = new GameController();
+        GameController myGame = new GameController(16);
     }
     
 }
