@@ -20,13 +20,14 @@ public class RandomMiner extends Miner{
             switch(action){
                 case 0: switch(front){
                             case EAST: if(col+1 < envGrid.getSize()); 
-                                        col++; break;
+                                        move(); break;
                             case SOUTH: if(row+1 < envGrid.getSize()); 
-                                        row++; break;
+                                        move(); break;
                             case WEST: if(col-1 >= 0)
-                                        col--; break;
+                                        move(); break;
                             case NORTH: if(row-1 >= 0)
-                                        row--; break;
+                                        move(); break;
+                            default: break;
                         }
                         break;
                 case 1: rotate(); break;
