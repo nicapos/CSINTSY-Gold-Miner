@@ -20,7 +20,12 @@ public class RandomMiner extends Miner{
             switch(action){
                 case 0: switch(front){
                             case EAST: if(col+1 < envGrid.getSize()); 
-                                        move(); break;
+                                        move(); 
+                                        if(envGrid.getTerrain(col, row) == 'P') // temp for explain
+                                            System.out.println("DEATH");
+                                        else if(envGrid.getTerrain(col, row) == 'G')
+                                            System.out.println("Miner WON");
+                                        break;
                             case SOUTH: if(row+1 < envGrid.getSize()); 
                                         move(); break;
                             case WEST: if(col-1 >= 0)
