@@ -87,6 +87,13 @@ public class SmartMiner extends Miner {
                     char cScan = this.scan(envGrid);
                     child.setScan(cScan);
                     successors.add(child);
+
+                    /* stop scanning if found gold already and return only the node which scanned gold */
+                    if (cScan == 'G') {
+                        successors.clear();
+                        successors.add(child);
+                        return successors;
+                    }
                 }
             } else if ( child.getFront() == parent.getFront() ) {
                 parent.setTerrain(parent.getScan());
