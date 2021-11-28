@@ -89,7 +89,7 @@ public class Grid {
                 rX = m - rY;
                 bX = rand.nextBoolean() ? rX : -rX;
                 bY = rand.nextBoolean() ? rY : -rY;
-            } while (!tileIsEmpty((goldX+bX), (goldY+bY)) || !tileIsInBounds((goldX+bX), (goldY+bY)));
+            } while (!tileIsEmpty((goldX+bX), (goldY+bY)) || !tileIsInBounds((goldX+bX), (goldY+bY)) || (goldX+bX == 0 && goldY+bY == 0));
 
             addBeacon(goldX+bX, goldY+bY);
         }
@@ -100,7 +100,7 @@ public class Grid {
             do {
                 pitX = rand.nextInt(n);
                 pitY = rand.nextInt(n);
-            } while (!tileIsEmpty(pitX, pitY));
+            } while (!tileIsEmpty(pitX, pitY) || (pitX == 0 && pitY == 0));
 
             addPit(pitX, pitY);
         }
