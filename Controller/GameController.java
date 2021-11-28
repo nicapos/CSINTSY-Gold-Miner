@@ -41,12 +41,15 @@ public class GameController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            gridLayer.updateMiner('S',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
-            mainLayer.validate();
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
+            if(actions.get(i).didScan())
+            {
+                gridLayer.updateMiner('S',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
+                mainLayer.validate();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
                 e.printStackTrace();
+                }
             }
         }
     }
@@ -82,7 +85,7 @@ public class GameController {
 
 
     public static void main(String[] args) {
-        GameController myGame = new GameController(16);
+        GameController myGame = new GameController(8);
     }
     
 }
