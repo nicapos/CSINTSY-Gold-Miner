@@ -3,9 +3,9 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Miner {
-    private Direction front;
-    private int row; // = y
-    private int col; // = x
+    protected Direction front;
+    protected int row; // = y
+    protected int col; // = x
 
     private static int nRotates, nScans, nMoves;
 

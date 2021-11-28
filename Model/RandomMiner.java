@@ -18,9 +18,19 @@ public class RandomMiner extends Miner{
         while(bAlive && !bMetGoal && MAX_DEPTH > 0){
             int action = rand.nextInt() % 3;
             switch(action){
-                case 0: move();
-                case 1: rotate();
-                case 2: scan(envGrid);
+                case 0: switch(front){
+                            case EAST: if(col+1 < envGrid.getSize()); 
+                                        col++; break;
+                            case SOUTH: if(row+1 < envGrid.getSize()); 
+                                        row++; break;
+                            case WEST: if(col-1 >= 0)
+                                        col--; break;
+                            case NORTH: if(row-1 >= 0)
+                                        row--; break;
+                        }
+                        break;
+                case 1: rotate(); break;
+                case 2: scan(envGrid); break;
             }
             bMetGoal = previous.getTerrain() == 'G';
             bAlive = !(previous.getTerrain() == 'P');
