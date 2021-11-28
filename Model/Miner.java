@@ -114,6 +114,10 @@ public class Miner {
                 break;
         }
         nScans++;
+
+        Action newState = new Action(this.row, this.col, this.front, true);
+        this.states.add(newState);
+
         return closest; // no pot, gold, pit, beacon in the front
     }
 
