@@ -49,6 +49,7 @@ public class Miner {
 
     private void addCurrentState() {
         Action newState = new Action(this.row, this.col, this.front);
+        newState.updateStats(nRotates, nScans, nMoves);
         this.states.add(newState);
     }
 
@@ -116,6 +117,7 @@ public class Miner {
         nScans++;
 
         Action newState = new Action(this.row, this.col, this.front, true);
+        newState.updateStats(nRotates, nScans, nMoves);
         this.states.add(newState);
 
         return closest; // no pot, gold, pit, beacon in the front

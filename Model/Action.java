@@ -5,6 +5,8 @@ public class Action {
     private Direction front;
     private boolean bScanned;
 
+    private int nRotates, nScans, nMoves;
+
     public Action (int row, int col, Direction front) {
         this.row = row;
         this.col = col;
@@ -26,6 +28,18 @@ public class Action {
     public Direction getFront() { return this.front; }
 
     public boolean didScan() { return this.bScanned; }
+
+    public void updateStats(int nRotates, int nScans, int nMoves) {
+        this.nRotates = nRotates;
+        this.nScans = nScans;
+        this.nMoves = nMoves;
+    }
+
+    public int getRotates() { return nRotates; }
+
+    public int getScans() { return nScans; }
+
+    public int getMoves() { return nMoves; }
 
     @Override
     public String toString() {
