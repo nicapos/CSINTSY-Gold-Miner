@@ -1,9 +1,5 @@
 package Controller;
-
-import java.lang.Thread.State;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 import Model.*;
 import View.GridPanel;
@@ -13,34 +9,23 @@ import View.MenuPanel;
 public class GameController {
     private Grid environment;
     private SmartMiner smartMode;
+    private RandomMiner randomMode;
     private MainFrame mainLayer;
     private GridPanel gridLayer;
-    private MenuPanel menuLayer;     
+    private MenuPanel menuLayer;  
+    private char mode;
 
     public GameController()
     {
         environment = new Grid(8, true);
 
         mainLayer = new MainFrame(8);
-        menuLayer = new MenuPanel(8);
+        menuLayer = new MenuPanel(8, this);
 
-        //TODO add if statement for startMode initialization and randomMode
-        smartMode = new SmartMiner(environment);
-        smartMode.startSearch();
+        //mainLayer.add(menuLayer); wala munang menu button kasi nagloloko
         
-        //TODO add if statement for randomMode
-        gridLayer = new GridPanel(8, environment.getMap(), smartMode.getFront());
         
-        mainLayer.add(gridLayer);
-        //mainLayer.add(menuLayer);
-        mainLayer.validate();
-
-        updateView(smartMode.getStates());
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        initializeGame('S'); //temporary initialization of game
     }
 
     public void updateView(ArrayList<Action>actions)
@@ -54,15 +39,45 @@ public class GameController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            gridLayer.updateMiner('S',smartMode.getStates().get(i).getFront(), smartMode.getStates().get(i).getCol(), smartMode.getStates().get(i).getRow());
+            gridLayer.updateMiner('S',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
             mainLayer.validate();
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    public void initializeGame(char mode)
+    {
+        this.mode = mode;
+        menuLayer.setVisible(false);
+
+        if(mode == 'S')
+        {
+            smartMode = new SmartMiner(environment);
+            smartMode.startSearch();
+            gridLayer = new GridPanel(8, environment.getMap(), smartMode.getFront(),this);
+
+            mainLayer.add(gridLayer);
+            mainLayer.validate();
+
+            updateView(smartMode.getStates());
+        }
+        else
+        {
+            randomMode = new RandomMiner(environment);
+            randomMode.startSearch();
+            gridLayer = new GridPanel(8, environment.getMap(), randomMode.getFront(),this);
+            
+            mainLayer.add(gridLayer);
+            mainLayer.validate();
+
+            //updateView(randomMode.getStates());
+        } 
+    }
+
 
     public static void main(String[] args) {
         GameController myGame = new GameController();

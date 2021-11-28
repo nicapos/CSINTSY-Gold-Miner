@@ -1,6 +1,7 @@
 package View;
 import javax.swing.*;
-import java.awt.*;
+
+import Controller.GameController;
 import Model.Direction;
 
 public class GridPanel extends JPanel {
@@ -11,16 +12,17 @@ public class GridPanel extends JPanel {
     private JLabel gridBg;
     private int n;
 
-    public GridPanel(int n, char[][] terrain, Direction front)
+    public GridPanel(int n, char[][] terrain, Direction front, GameController mainGame)
     {   
         this.n = n;
         this.gridBg = new JLabel();
-        this.setSize(n*TILE_SIZE, n*TILE_SIZE);
+        this.setSize(n*TILE_SIZE+200, n*TILE_SIZE+30);
         this.setLayout(null);
         tiles = new JLabel[n][n];
         miner = new JLabel();
 
         initializeTiles(terrain, front);
+
     }
     
     private void initializeTiles(char[][] terrain, Direction front)
@@ -67,7 +69,5 @@ public class GridPanel extends JPanel {
             miner.setIcon(new ImageIcon("img/Miner/Scan"+front+".png"));
         miner.setSize(TILE_SIZE, TILE_SIZE);
         miner.setLocation(x*TILE_SIZE, y*TILE_SIZE);
-
     }
-
 }
