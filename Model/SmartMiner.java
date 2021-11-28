@@ -95,8 +95,10 @@ public class SmartMiner extends Miner {
                         return successors;
                     }
                 }
-            } else if ( child.getFront() == parent.getFront() ) {
-                parent.setTerrain(parent.getScan());
+            } else {
+                if ( child.getFront() == parent.getFront() )
+                    parent.setTerrain(parent.getScan());
+                child.setScan('0');
             }
             this.rotate();
         }
