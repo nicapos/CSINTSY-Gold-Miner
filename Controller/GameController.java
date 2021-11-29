@@ -5,7 +5,8 @@ import Model.*;
 import View.GridPanel;
 import View.InputSizeFrame;
 import View.MainFrame;
-import View.MenuPanel;
+import View.MenuFrame;
+
 
 public class GameController {
     private Grid environment;
@@ -13,7 +14,7 @@ public class GameController {
     private RandomMiner randomMode;
     private MainFrame mainLayer;
     private GridPanel gridLayer;
-    private MenuPanel menuLayer;  
+    private MenuFrame menuLayer;  
     private char mode;
     private ArrayList<Action> actions;
     private int n;
@@ -22,14 +23,14 @@ public class GameController {
     public GameController()
     {
         inputFrame = new InputSizeFrame(this);
-        
-
     }
 
     public void initializeGame(char mode)
     {
         this.mode = mode;
         menuLayer.setVisible(false);
+        environment = new Grid(n, true);
+        mainLayer = new MainFrame(n);
         Thread gameThread = new Thread(updateView());
         
         if(mode == 'S')
@@ -89,13 +90,8 @@ public class GameController {
     {
         inputFrame.setVisible(false);
         this.n = inputN;
-        environment = new Grid(n, true);
+        menuLayer = new MenuFrame(n, this);
 
-        mainLayer = new MainFrame(n);
-        menuLayer = new MenuPanel(n, this);
-
-        mainLayer.add(menuLayer);
-        mainLayer.revalidate();
     }
     public static void main(String[] args) {
         GameController myGame = new GameController();

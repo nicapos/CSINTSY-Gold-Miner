@@ -2,6 +2,7 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
@@ -10,38 +11,51 @@ import Controller.GameController;
 import java.awt.Color;
 import java.awt.event.*;
 
-public class MenuPanel extends JPanel{
+public class MenuFrame extends JFrame{
 
     private static final int TILE_SIZE = 64;
     private JLabel smartButton;
     private JLabel randomButton;
     private JLabel miner;
+    private JPanel menuPanel;
+    private JLabel header;
 
-    public MenuPanel (int n, GameController mainGame)
+    public MenuFrame (int n, GameController mainGame)
     {
-        this.setSize(n*TILE_SIZE, n*TILE_SIZE);
-        this.setBackground(Color.darkGray);
-        this.setLayout(null);
 
-        //TODO Input for n Size
+        this.setTitle("Gold Miner");
+        this.setSize(700, 600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+
+        menuPanel = new JPanel();
+        menuPanel.setLayout(null);
+        menuPanel.setBackground(Color.darkGray);
 
 
         miner = new JLabel(new ImageIcon("img/BigMiner.png"));
-        miner.setBounds(2*TILE_SIZE, 2*TILE_SIZE, 192, 192);
-        this.add(miner);
+        miner.setBounds(2*TILE_SIZE, 3*TILE_SIZE, 192, 192);
+        menuPanel.add(miner);
         
 
         smartButton = new JLabel(new ImageIcon("img/SmartButton.png"));
         smartButton.setName("Smart Mode");
-        smartButton.setBounds(8*TILE_SIZE, 1*TILE_SIZE, 160, 160);
+        smartButton.setBounds(6*TILE_SIZE, 2*TILE_SIZE, 160, 160);
         smartButton.addMouseListener(gMouseAdapter(smartButton, mainGame));
-        this.add(smartButton);
+        menuPanel.add(smartButton);
 
         randomButton = new JLabel(new ImageIcon("img/RandomButton.png"));
         randomButton.setName("Random Mode");
-        randomButton.setBounds(8*TILE_SIZE, 3*TILE_SIZE, 160,160);
+        randomButton.setBounds(6*TILE_SIZE, 4*TILE_SIZE, 160,160);
         randomButton.addMouseListener(gMouseAdapter(randomButton, mainGame));
-        this.add(randomButton);
+        menuPanel.add(randomButton);
+
+        header = new JLabel(new ImageIcon("img/Title.png"));
+        header.setBounds(1*TILE_SIZE, 0, 500, 150);
+        menuPanel.add(header);
+
+        this.add(menuPanel);
+        this.validate();
     }
     
     private MouseAdapter gMouseAdapter(JLabel button, GameController mainGame)
