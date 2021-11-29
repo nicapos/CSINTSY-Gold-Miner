@@ -14,7 +14,7 @@ public class SmartMiner extends Miner {
 
     public ArrayList<Node> getSearchMoves() { return moves; }
 
-    public void startSearch() { // automatic search until miner finds gold;
+    public String startSearch() { // automatic search until miner finds gold;
         Node search;
         Node previous = new Node(0, 0, this.getFront());
         int MAX_DEPTH = this.envGrid.getSize() * 2; // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
@@ -39,12 +39,16 @@ public class SmartMiner extends Miner {
         }
 
         System.out.println("Rotates: "+this.getRotates()+", Scans: "+this.getScans()+", Moves: "+this.getMoves());
+        
+        String searchMsg;
         if (previous.getTerrain() == 'G')
-            System.out.println("Search successful");
+            searchMsg = "Search successful";
         else if (previous.getTerrain() == 'P')
-            System.out.println("Game-over!");
-        else // somehow didn't end up in gold or pit
-            System.out.println("Ended search.");
+            searchMsg = "Game-over!";
+        else // default message if search ended without miner landing in gold or pit
+            searchMsg = "Ended search.";
+        System.out.println(searchMsg);
+        return searchMsg;
     }
 
     public Node getNextMove(Node previous) {
