@@ -70,7 +70,7 @@ public class Miner {
 
     public char scan(Grid grid) {
         // based sa front, scan there
-        char closest = 0;
+        char closest = '0';
         int n = grid.getSize();
         switch(front){
             case NORTH: 
@@ -79,7 +79,6 @@ public class Miner {
                         ;
                     else if(grid.getTerrain(col, i) != 0){
                         closest = grid.getTerrain(col, i);
-                        break;
                     }
                 }
                 break;
@@ -99,7 +98,6 @@ public class Miner {
                         ;
                     else if(grid.getTerrain(i, row) != 0){
                         closest = grid.getTerrain(i, row);
-                        break;
                     }
                 }
                 break;
@@ -120,7 +118,7 @@ public class Miner {
         newState.updateStats(nRotates, nScans, nMoves);
         this.states.add(newState);
 
-        return closest; // no pot, gold, pit, beacon in the front
+        return closest; // no pot, gold, pit, beacon in the front -> returns 0
     }
 
     public void rotate(){ 
