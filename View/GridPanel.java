@@ -16,7 +16,7 @@ public class GridPanel extends JPanel {
     {   
         this.n = n;
         this.gridBg = new JLabel();
-        this.setSize(n*TILE_SIZE+200, n*TILE_SIZE+30);
+        this.setSize(n*TILE_SIZE, n*TILE_SIZE+30);
         this.setLayout(null);
         tiles = new JLabel[n][n];
         miner = new JLabel();

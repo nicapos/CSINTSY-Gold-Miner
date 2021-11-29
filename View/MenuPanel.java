@@ -17,15 +17,19 @@ public class MenuPanel extends JPanel{
         this.setSize(n*TILE_SIZE, n*TILE_SIZE);
         this.setLayout(null);
 
+        //TODO Input for n Size
+
+
         smartButton = new JButton("Smart Mode");
         smartButton.setName("Smart Mode");
-        smartButton.setBounds(2*64, 2*64, 128, 48);
+        smartButton.setBounds(7*TILE_SIZE, 2*TILE_SIZE, 128, 48);
         smartButton.addMouseListener(gMouseAdapter(smartButton, mainGame));
         this.add(smartButton);
 
         randomButton = new JButton("Random Mode");
         randomButton.setName("Random Mode");
-        randomButton.setBounds(2*64, 4*64, 128,48);
+        randomButton.setBounds(7*TILE_SIZE, 4*TILE_SIZE, 128,48);
+        randomButton.addMouseListener(gMouseAdapter(randomButton, mainGame));
         this.add(randomButton);
     }
     
