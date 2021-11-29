@@ -27,11 +27,26 @@ public class RandomMiner extends Miner{
                                             System.out.println("Miner WON");
                                         break;
                             case SOUTH: if(row+1 < envGrid.getSize()); 
-                                        move(); break;
+                                        move(); 
+                                        if(envGrid.getTerrain(col, row) == 'P') // temp for explain
+                                            System.out.println("DEATH");
+                                        else if(envGrid.getTerrain(col, row) == 'G')
+                                            System.out.println("Miner WON");
+                                        break;
                             case WEST: if(col-1 >= 0)
-                                        move(); break;
+                                        move(); 
+                                        if(envGrid.getTerrain(col, row) == 'P') // temp for explain
+                                            System.out.println("DEATH");
+                                        else if(envGrid.getTerrain(col, row) == 'G')
+                                            System.out.println("Miner WON");
+                                        break;
                             case NORTH: if(row-1 >= 0)
-                                        move(); break;
+                                        move(); 
+                                        if(envGrid.getTerrain(col, row) == 'P') // temp for explain
+                                            System.out.println("DEATH");
+                                        else if(envGrid.getTerrain(col, row) == 'G')
+                                            System.out.println("Miner WON");
+                                        break;
                             default: break;
                         }
                         break;
