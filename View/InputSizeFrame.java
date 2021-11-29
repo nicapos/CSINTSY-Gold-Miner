@@ -23,7 +23,7 @@ public class InputSizeFrame extends JFrame {
     public InputSizeFrame(GameController mainGame)
     {
         this.setTitle("Gold Miner");
-        this.setSize(700, 600);
+        this.setSize(650, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
