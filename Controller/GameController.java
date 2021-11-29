@@ -29,7 +29,6 @@ public class GameController {
     {
         this.mode = mode;
         menuLayer.setVisible(false);
-        environment = new Grid(n, true);
         mainLayer = new MainFrame(n);
         Thread gameThread = new Thread(updateView());
         
@@ -89,7 +88,8 @@ public class GameController {
     public void setGame(int inputN)
     {
         inputFrame.setVisible(false);
-        this.n = inputN;
+        environment = new Grid(inputN, true);
+        this.n = environment.getSize();
         menuLayer = new MenuFrame(n, this);
 
     }
