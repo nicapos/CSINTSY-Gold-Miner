@@ -13,7 +13,7 @@ public class GridPanel extends JPanel {
     private JLabel gridBg;
     private int n;
 
-    private JLabel rotate,scan,move;
+    private JLabel rotate,scan,move, minerMessage;
 
     public GridPanel(int n, char[][] terrain, Direction front)
     {   
@@ -25,17 +25,20 @@ public class GridPanel extends JPanel {
         miner = new JLabel();
 
         initializeTiles(terrain, front);
-
         rotate = new JLabel("ROTATES:");
-       rotate.setBounds((n+1)*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
-       this.add(rotate);
-       scan = new JLabel("SCANS:");
-       scan.setBounds((n+1)*TILE_SIZE, 2*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
-       this.add(scan);
-       move = new JLabel("MOVES:");
-       move.setBounds((n+1)*TILE_SIZE, 3*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
-       this.add(move);
+        rotate.setBounds((n+1)*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
+        this.add(rotate);
+        scan = new JLabel("SCANS:");
+        scan.setBounds((n+1)*TILE_SIZE, 2*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
+        this.add(scan);
+        move = new JLabel("MOVES:");
+        move.setBounds((n+1)*TILE_SIZE, 3*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
+        this.add(move);
+        this.validate();
 
+        minerMessage = new JLabel();
+        minerMessage.setBounds((n+1)*TILE_SIZE, 4*TILE_SIZE, TILE_SIZE+100, TILE_SIZE+100);
+        this.add(minerMessage);
     }
     
     private void initializeTiles(char[][] terrain, Direction front)
@@ -89,5 +92,11 @@ public class GridPanel extends JPanel {
         rotate.setText("ROTATES: " + currState.getRotates());
         scan.setText("SCANS: " + currState.getScans());
         move.setText("MOVES: " + currState.getMoves());
+    }
+
+    public void showMessage(String message)
+    {
+        minerMessage.setText(message);        
+        this.revalidate();
     }
 }

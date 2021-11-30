@@ -19,15 +19,16 @@ public class GameController {
     private ArrayList<Action> actions;
     private int n;
     private InputSizeFrame inputFrame;
+    private String minerMessage;
 
     public GameController()
     {
         inputFrame = new InputSizeFrame(this);
     }
 
-    public void initializeGame(char mode)
+    public void initializeGame(char chosenMode)
     {
-        this.mode = mode;
+        this.mode = chosenMode;
         menuLayer.setVisible(false);
         mainLayer = new MainFrame(n);
         Thread gameThread = new Thread(updateView());
@@ -35,9 +36,9 @@ public class GameController {
         if(mode == 'S')
         {
             smartMode = new SmartMiner(environment);
-            smartMode.startSearch();
-            actions = smartMode.getStates();
             gridLayer = new GridPanel(n, environment.getMap(), smartMode.getFront());
+            minerMessage = smartMode.startSearch();
+            actions = smartMode.getStates();
 
             mainLayer.add(gridLayer);
             mainLayer.revalidate();
@@ -45,9 +46,9 @@ public class GameController {
         else
         {
             randomMode = new RandomMiner(environment);
-            randomMode.startSearch();
-            actions = randomMode.getStates();
             gridLayer = new GridPanel(n, environment.getMap(), randomMode.getFront());
+            minerMessage = randomMode.startSearch();
+            actions = randomMode.getStates();
             
             mainLayer.add(gridLayer);
             mainLayer.revalidate();
@@ -64,23 +65,23 @@ public class GameController {
                 {
                     gridLayer.updateDash(actions.get(i));
                     gridLayer.updateMiner('M',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
-                    mainLayer.revalidate();
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     if(actions.get(i).didScan())
                     {
                         gridLayer.updateMiner('S',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
-                        mainLayer.revalidate();
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                         e.printStackTrace();
                         }
                     }
                 }
+                gridLayer.showMessage(minerMessage);
+                mainLayer.revalidate();
             }
         };
     }
