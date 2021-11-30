@@ -20,9 +20,8 @@ public class RandomMiner extends Miner{
         while (bAlive && !bMetGoal && MAX_DEPTH > 0 && searchMsg == null){
             int action = rand.nextInt() % 3;
             switch(action){
-                case 0: if ( isMoveValid(front) )
+                case 0: if ( isMoveValid(front) ) {
                             move();
-                        else {
                             if(envGrid.getTerrain(col, row) == 'P')
                                 searchMsg = "Game-over!";
                             else if(envGrid.getTerrain(col, row) == 'G')
