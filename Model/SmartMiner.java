@@ -14,6 +14,10 @@ public class SmartMiner extends Miner {
 
     public ArrayList<Node> getSearchMoves() { return moves; }
 
+    /**
+     * Starts the miner's search for the gold and returns a search message depending on the result of the search.
+     * @return the result of the search via a search message
+     */
     public String startSearch() { // automatic search until miner finds gold;
         Node search;
         Node previous = new Node(0, 0, this.getFront());
@@ -56,19 +60,19 @@ public class SmartMiner extends Miner {
 
         ArrayList<Node> possibleMoves = createSuccessors(previous);
         Node nextMove;
-        System.out.println("1: " + possibleMoves);
+        System.out.println("Possible moves: " + possibleMoves);
 
         /* if there's more than one candidate for next move, only keep the most optimal move. (best case: 1 left, worst case: 3 left) */
         if (possibleMoves.size() > 1)
             possibleMoves = filterByScan(possibleMoves);
-        System.out.println("2: " + possibleMoves);
         
         /* if there's more than one candidate for next move, only keep the most optimal direction (best case: 1 left, worst case: 0 left) */
         if (possibleMoves.size() > 1)
             nextMove = filterByDirection(possibleMoves);
         else
             nextMove = possibleMoves.get(0);
-        System.out.println("3: " + nextMove);
+
+        System.out.println("Best move: " + nextMove);
         return nextMove;
     }
 
@@ -92,8 +96,8 @@ public class SmartMiner extends Miner {
                     child.setScan(cScan);
                     successors.add(child);
 
-                    /* stop scanning if found gold already and return only the node which scanned gold */
-                    if (cScan == 'G') {
+                    /* stop scanning if found gold already or parent node is already in gold tile and return only the node which scanned gold */
+                    if (cScan == 'G' || parent.getTerrain() == 'G') {
                         successors.clear();
                         successors.add(child);
                         return successors;
