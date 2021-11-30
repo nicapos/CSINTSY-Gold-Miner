@@ -15,6 +15,13 @@ public class Grid {
         else
             this.n = size;
 
+        if (randomMap)
+            randomizeMap();
+        else
+            initializeMap();
+    }
+
+    private void initializeMap() {
         grid = new char[n][n];
 
         nGoldLeft = 1;
@@ -22,9 +29,6 @@ public class Grid {
         nBeaconsLeft = (int)(n * 0.1);
         if (nBeaconsLeft < 1)
             nBeaconsLeft = 1;
-
-        if (randomMap)
-            randomizeMap();
     }
 
     public void addPit(int col, int row) {
@@ -70,43 +74,57 @@ public class Grid {
 
     private void randomizeMap () {
         Random rand = new Random();
+        Boolean createdValidMap;
 
-        // Initialize location of pot of gold
-        int goldX, goldY;
         do {
-            goldX = rand.nextInt(n);
-            goldY = rand.nextInt(n);
-        } while (goldX == 0 && goldY == 0);
-        addGold(goldX, goldY);
-
-        // Initialize location of beacons
-        int m = rand.nextInt(n-1) + 1;
-
-        while (nBeaconsLeft != 0) {
-            int rY, rX, bX, bY;
+            initializeMap();
+            // Initialize location of pot of gold
+            int goldX, goldY;
             do {
-                rY = rand.nextInt(m+1);
-                rX = m - rY;
-                bX = rand.nextBoolean() ? rX : -rX;
-                bY = rand.nextBoolean() ? rY : -rY;
-            } while (!tileIsEmpty((goldX+bX), (goldY+bY)) || !tileIsInBounds((goldX+bX), (goldY+bY)) || (goldX+bX == 0 && goldY+bY == 0));
+                goldX = rand.nextInt(n);
+                goldY = rand.nextInt(n);
+            } while (goldX == 0 && goldY == 0);
+            addGold(goldX, goldY);
 
-            addBeacon(goldX+bX, goldY+bY);
-        }
+            // Initialize location of beacons
+            int m = rand.nextInt(n-1) + 1;
 
-        // Initialize location of pits
-        while (nPitsLeft != 0) {
-            int pitX, pitY;
-            do {
-                pitX = rand.nextInt(n);
-                pitY = rand.nextInt(n);
-            } while (!tileIsEmpty(pitX, pitY) || (pitX == 0 && pitY == 0));
+            while (nBeaconsLeft != 0) {
+                int rY, rX, bX, bY;
+                do {
+                    rY = rand.nextInt(m+1);
+                    rX = m - rY;
+                    bX = rand.nextBoolean() ? rX : -rX;
+                    bY = rand.nextBoolean() ? rY : -rY;
+                } while (!tileIsEmpty((goldX+bX), (goldY+bY)) || !tileIsInBounds((goldX+bX), (goldY+bY)) || (goldX+bX == 0 && goldY+bY == 0));
 
-            addPit(pitX, pitY);
-        }
+                addBeacon(goldX+bX, goldY+bY);
+            }
+
+            // Initialize location of pits
+            while (nPitsLeft != 0) {
+                int pitX, pitY;
+                do {
+                    pitX = rand.nextInt(n);
+                    pitY = rand.nextInt(n);
+                } while (!tileIsEmpty(pitX, pitY) || (pitX == 0 && pitY == 0));
+
+                addPit(pitX, pitY);
+            }
+
+            // check if the gold is surrounded by pits, making the map invalid
+            if (   (getTerrain(goldX+1, goldY) == 'P' || !tileIsInBounds(goldX+1, goldY))
+                && (getTerrain(goldX-1, goldY) == 'P' || !tileIsInBounds(goldX-1, goldY))
+                && (getTerrain(goldX, goldY+1) == 'P' || !tileIsInBounds(goldX, goldY+1))
+                && (getTerrain(goldX, goldY-1) == 'P' || !tileIsInBounds(goldX, goldY-1))   ) {
+                createdValidMap = false;
+                System.out.println("Map is not valid. Regenerating...");
+            } else
+                createdValidMap = true;
+        } while ( !createdValidMap );
     }
 
-    public boolean tileIsInBounds(int row, int col) {
+    public boolean tileIsInBounds(int col, int row) {
         return ((0 <= row && row < n) && (0 <= col && col < n));
     }
 
