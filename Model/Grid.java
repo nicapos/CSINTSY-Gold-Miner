@@ -38,7 +38,7 @@ public class Grid {
         if (nPitsLeft > 0 && tileIsEmpty(col, row)) {
             grid[row][col] = 'P';
             nPitsLeft--;
-            System.out.println("Added pit to (" + row + ", " + col + ")");
+            System.out.println("Added pit to (" + col + ", " + row + ")");
             return true;
         }
         return false;
@@ -50,7 +50,7 @@ public class Grid {
             if (nGoldLeft == 1 || (nGoldLeft == 0 && (Math.abs(goldCol-col) + Math.abs(goldRow-row)) < n)) {
                 grid[row][col] = 'B';
                 nBeaconsLeft--;
-                System.out.println("Added beacon to (" + row + ", " + col + ")");
+                System.out.println("Added beacon to (" + col + ", " + row + ")");
                 return true;
             }
         }
@@ -63,7 +63,7 @@ public class Grid {
             goldCol = col;
             goldRow = row;
             nGoldLeft--;
-            System.out.println("Added gold to (" + row + ", " + col + ")");
+            System.out.println("Added gold to (" + col + ", " + row + ")");
             return true;
         }
         return false;
