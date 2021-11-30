@@ -6,6 +6,7 @@ public class Grid {
     private int n;
 
     private int nGoldLeft, nPitsLeft, nBeaconsLeft;
+    private int goldRow, goldCol;
 
     public Grid (int size, boolean randomMap) {
         if (size < 8)
@@ -25,6 +26,8 @@ public class Grid {
         grid = new char[n][n];
 
         nGoldLeft = 1;
+        goldCol = -1; 
+        goldRow = -1;
         nPitsLeft = (int)(n * 0.25);
         nBeaconsLeft = (int)(n * 0.1);
         if (nBeaconsLeft < 1)
@@ -32,32 +35,52 @@ public class Grid {
     }
 
     public boolean addPit(int col, int row) {
-        if (nPitsLeft > 0 && grid[row][col] == '0') {
+        if (nPitsLeft > 0 && tileIsEmpty(col, row)) {
             grid[row][col] = 'P';
             nPitsLeft--;
             return true;
         }
-        else 
-            return false;
+        return false;
     }
 
     public boolean addBeacon(int col, int row) {
-        // pls add formula sa checker since beacon cant be too far from Gold
-        if (nBeaconsLeft > 0 && grid[row][col] == '0') {
-            grid[row][col] = 'B';
-            nBeaconsLeft--;
-            return true;
+        if (nBeaconsLeft > 0 && tileIsEmpty(col, row)) {
+            // beacon must be <n moves away from gold, where n is the grid's size        
+            if (nGoldLeft == 1 || (nGoldLeft == 0 && (Math.abs(goldCol-col) + Math.abs(goldRow-row)) < n)) {
+                grid[row][col] = 'B';
+                nBeaconsLeft--;
+                return true;
+            }
         }
         return false;
     }
 
     public boolean addGold(int col, int row) {
-        if (nGoldLeft > 0 && grid[row][col] == '0') {
+        if (nGoldLeft > 0 && tileIsEmpty(col, row)) {
             grid[row][col] = 'G';
+            goldCol = col;
+            goldRow = row;
             nGoldLeft--;
             return true;
         }
         return false;
+    }
+
+    public void clearTile (int col, int row) {
+        char cTerrain = getTerrain(col, row);
+        if ( cTerrain != 0 ) {
+            grid[row][col] = 0;
+
+            if (cTerrain == 'G') {
+                nGoldLeft++;
+                goldCol = -1;
+                goldRow = -1;
+            } else if (cTerrain == 'B')
+                nBeaconsLeft++;
+            else if (cTerrain == 'P')
+                nPitsLeft++;
+                 
+        }
     }
 
     public int getSize() { return n; }

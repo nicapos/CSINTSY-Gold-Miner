@@ -181,4 +181,21 @@ public class SmartMiner extends Miner {
             default:    return Direction.SOUTH; // added to prevent compilation error
         }
     }
+
+    private int evaluate (Node candidate) {
+        int scanPriority = 0, directionPriority = 0;
+        switch (candidate.getScan()) {
+            case 'G':   scanPriority = 3; break;
+            case 'B':   scanPriority = 2; break;
+            case 0:     scanPriority = 1; break;
+            case 'P':   scanPriority = 0; break;
+        }
+        switch (candidate.getFront()) {
+            case EAST:  directionPriority = 4; break;
+            case SOUTH: directionPriority = 3; break;
+            case WEST:  directionPriority = 2; break;
+            case NORTH: directionPriority = 1; break;
+        }
+        return (4 * scanPriority) + directionPriority;
+    }
 }
