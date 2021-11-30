@@ -54,7 +54,8 @@ public class InputSizeFrame extends JFrame {
     {
         return new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
-               mainGame.setGame(Integer.parseInt(inputText.getText()));
+                if(!inputText.getText().isEmpty())
+                    mainGame.setGame(Integer.parseInt(inputText.getText()));
             }
         };
     }
