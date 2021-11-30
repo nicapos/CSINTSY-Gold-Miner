@@ -92,8 +92,8 @@ public class GameController {
     public void setGame(int inputN, boolean isMapRandom)
     {
         inputFrame.setVisible(false);
-        this.n = inputN;
         this.environment = new Grid(inputN, isMapRandom);
+        this.n = environment.getSize();
         if(isMapRandom)
             menuLayer = new MenuFrame(n, this);
         else
