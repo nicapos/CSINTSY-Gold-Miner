@@ -74,7 +74,7 @@ public class Miner {
         int n = grid.getSize();
         switch(front){
             case NORTH: 
-                for(int i = n-1; i > row; i--){
+                for (int i = 0; i < row; i++) {
                     if(grid.tileIsEmpty(col, i))
                         ;
                     else if(grid.getTerrain(col, i) != 0){
@@ -93,7 +93,7 @@ public class Miner {
                 }
                 break;
             case WEST: 
-                for(int i = n-1; i > col; i--){
+                for (int i = 0; i < col; i++) {
                     if(grid.tileIsEmpty(i, row))
                         ;
                     else if(grid.getTerrain(i, row) != 0){
