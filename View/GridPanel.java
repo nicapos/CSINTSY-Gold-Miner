@@ -25,7 +25,7 @@ public class GridPanel extends JPanel {
 
         initializeTiles(terrain, front);
         rotate = new JLabel("ROTATES:");
-        rotate.setBounds((n+1)*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);
+        rotate.setBounds((n+1)*TILE_SIZE, 1*TILE_SIZE, TILE_SIZE+30, TILE_SIZE);
         this.add(rotate);
         scan = new JLabel("SCANS:");
         scan.setBounds((n+1)*TILE_SIZE, 2*TILE_SIZE, TILE_SIZE+10, TILE_SIZE);

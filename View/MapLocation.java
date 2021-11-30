@@ -127,6 +127,8 @@ public class MapLocation extends JFrame{
                         pitCount.setText(String.valueOf(environment.getPitsLeft()));
                     if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
                         mainGame.menuStart();
+                    pitX.setText(null);
+                    pitY.setText(null);
                 }
                 else if(button.getName().equals("Add Beacon"))
                 {
@@ -134,6 +136,8 @@ public class MapLocation extends JFrame{
                         beaconCount.setText(String.valueOf(environment.getBeaconsLeft()));
                     if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
                         mainGame.menuStart();
+                    bX.setText(null);
+                    bY.setText(null);
                 }
                 else if(button.getName().equals("Add Gold"))
                 {
@@ -141,6 +145,8 @@ public class MapLocation extends JFrame{
                         goldCount.setText(String.valueOf(environment.getGoldLeft()));
                     if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
                         mainGame.menuStart();
+                    goldX.setText(null);
+                    goldY.setText(null);
                 }
                 
                 framePanel.revalidate();
