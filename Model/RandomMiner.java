@@ -20,25 +20,15 @@ public class RandomMiner extends Miner{
         while (bAlive && !bMetGoal && MAX_DEPTH > 0 && searchMsg == null){
             int action = rand.nextInt() % 3;
             switch(action){
-                case 0: switch(front){
-                            case EAST: if(col+1 < envGrid.getSize()); 
-                                            move(); 
-                                        break;
-                            case SOUTH: if(row+1 < envGrid.getSize()); 
-                                            move(); 
-                                        break;
-                            case WEST: if(col-1 >= 0)
-                                            move(); 
-                                        break;
-                            case NORTH: if(row-1 >= 0)
-                                            move();
-                                        break;
+                case 0: if ( isMoveValid(front) )
+                            move();
+                        else {
+                            if(envGrid.getTerrain(col, row) == 'P')
+                                searchMsg = "Game-over!";
+                            else if(envGrid.getTerrain(col, row) == 'G')
+                                searchMsg = "Search successful";
+                            break;
                         }
-                        if(envGrid.getTerrain(col, row) == 'P') // temp for explain
-                            searchMsg = "Game-over!";
-                        else if(envGrid.getTerrain(col, row) == 'G')
-                            searchMsg = "Search successful";
-                        break;
                 case 1: rotate(); break;
                 case 2: scan(envGrid); break;
             }
@@ -61,5 +51,15 @@ public class RandomMiner extends Miner{
             searchMsg = "Ended search.";
         System.out.println(searchMsg);
         return searchMsg;
+    }
+
+    private boolean isMoveValid(Direction moveDirection) {
+        switch (moveDirection) {
+            case EAST:  return (col + 1 < envGrid.getSize());
+            case SOUTH: return (row + 1 < envGrid.getSize()); 
+            case WEST:  return (col - 1 >= 0);
+            case NORTH: return (row - 1 >= 0);
+            default:    return false; // added to prevent compilation error
+        }
     }
 }
