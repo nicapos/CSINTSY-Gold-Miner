@@ -35,7 +35,9 @@ public class Grid {
     }
 
     public boolean addPit(int col, int row) {
-        if (nPitsLeft > 0 && tileIsEmpty(col, row)) {
+        if(row == 0 && col == 0)
+            return false;
+        else if (nPitsLeft > 0 && tileIsEmpty(col, row)) {
             grid[row][col] = 'P';
             nPitsLeft--;
             System.out.println("Added pit to (" + col + ", " + row + ")");
@@ -45,9 +47,11 @@ public class Grid {
     }
 
     public boolean addBeacon(int col, int row) {
-        if (nBeaconsLeft > 0 && tileIsEmpty(col, row)) {
+        if(row == 0 && col == 0)
+            return false;
+        else if (nBeaconsLeft > 0 && tileIsEmpty(col, row)) {
             // beacon must be <n moves away from gold, where n is the grid's size        
-            if (nGoldLeft == 1 || (nGoldLeft == 0 && (Math.abs(goldCol-col) + Math.abs(goldRow-row)) < n)) {
+            if (nGoldLeft == 0 && (Math.abs(goldCol-col) + Math.abs(goldRow-row)) < n) {
                 grid[row][col] = 'B';
                 nBeaconsLeft--;
                 System.out.println("Added beacon to (" + col + ", " + row + ")");
@@ -58,7 +62,9 @@ public class Grid {
     }
 
     public boolean addGold(int col, int row) {
-        if (nGoldLeft > 0 && tileIsEmpty(col, row)) {
+        if(row == 0 && col == 0)
+            return false;
+        else if (nGoldLeft > 0 && tileIsEmpty(col, row) && (!(row==0) && !(col==0))) {
             grid[row][col] = 'G';
             goldCol = col;
             goldRow = row;
