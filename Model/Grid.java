@@ -37,7 +37,6 @@ public class Grid {
             nPitsLeft--;
             return true;
         }
-        else 
             return false;
     }
 
