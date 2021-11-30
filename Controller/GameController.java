@@ -64,7 +64,13 @@ public class GameController {
         return new Thread(){
             public void run()
             {
-                for(int i = 0; i < actions.size()-1; i++)
+                int nActions;
+                if(mode == 'S')
+                    nActions = actions.size()-1;
+                else
+                    nActions = actions.size();
+                    
+                for(int i = 0; i < nActions; i++)
                 {
                     gridLayer.updateDash(actions.get(i));
                     gridLayer.updateMiner('M',actions.get(i).getFront(), actions.get(i).getCol(), actions.get(i).getRow());
