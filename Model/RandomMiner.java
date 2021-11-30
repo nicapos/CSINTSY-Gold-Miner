@@ -1,5 +1,6 @@
 package Model;
 import java.util.Random;
+
 public class RandomMiner extends Miner{
     private Grid envGrid;
     private boolean bAlive;
@@ -15,6 +16,8 @@ public class RandomMiner extends Miner{
         Random rand = new Random();
         Node previous = new Node(0, 0, this.getFront());
         int MAX_DEPTH = envGrid.getSize() * envGrid.getSize();
+        if(MAX_DEPTH > 100)
+            MAX_DEPTH = 100;
         String searchMsg = null;
         
         while (bAlive && !bMetGoal && MAX_DEPTH > 0 && searchMsg == null){
