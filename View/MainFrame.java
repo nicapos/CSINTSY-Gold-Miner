@@ -1,5 +1,4 @@
 package View;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 
@@ -8,9 +7,9 @@ public class MainFrame extends JFrame{
     private static final int TILE_SIZE = 64;
     
 
-    public MainFrame(int n)
+    public MainFrame(int inputN)
     {
-        this.n = n;
+        this.n = inputN;
         this.setTitle("Gold Miner");
         this.setSize(n*TILE_SIZE+(TILE_SIZE*4), n*TILE_SIZE+30);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

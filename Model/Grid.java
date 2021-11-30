@@ -85,6 +85,12 @@ public class Grid {
 
     public int getSize() { return n; }
 
+    public int getBeaconsLeft() {return nBeaconsLeft;}
+
+    public int getPitsLeft() {return nPitsLeft;}
+
+    public int getGoldLeft(){ return nGoldLeft;}
+
     public boolean tileIsEmpty(int col, int row) {
         try {
             return (grid[row][col] == 0);

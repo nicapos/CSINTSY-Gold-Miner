@@ -1,7 +1,6 @@
 package View;
 import javax.swing.*;
 
-import Controller.GameController;
 import Model.Direction;
 import Model.Action;
 

@@ -5,6 +5,7 @@ import Model.*;
 import View.GridPanel;
 import View.InputSizeFrame;
 import View.MainFrame;
+import View.MapLocation;
 import View.MenuFrame;
 
 
@@ -20,6 +21,8 @@ public class GameController {
     private int n;
     private InputSizeFrame inputFrame;
     private String minerMessage;
+    private MapLocation locationsLayer;
+
 
     public GameController()
     {
@@ -86,13 +89,24 @@ public class GameController {
         };
     }
 
-    public void setGame(int inputN)
+    public void setGame(int inputN, boolean isMapRandom)
     {
         inputFrame.setVisible(false);
-        environment = new Grid(inputN, true);
-        this.n = environment.getSize();
-        menuLayer = new MenuFrame(n, this);
+        this.n = inputN;
+        this.environment = new Grid(inputN, isMapRandom);
+        if(isMapRandom)
+            menuLayer = new MenuFrame(n, this);
+        else
+        {
+            locationsLayer = new MapLocation(environment.getPitsLeft(), environment.getBeaconsLeft(), this, environment);
+            locationsLayer.setVisible(true);
+        }
+    }
 
+    public void menuStart()
+    {
+        menuLayer = new MenuFrame(n, this);
+        locationsLayer.setVisible(false);
     }
     public static void main(String[] args) {
         GameController myGame = new GameController();

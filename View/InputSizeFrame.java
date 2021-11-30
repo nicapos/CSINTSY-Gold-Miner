@@ -17,7 +17,7 @@ public class InputSizeFrame extends JFrame {
 
     private JPanel inputPanel;
     private JTextField inputText;
-    private JButton submit;
+    private JButton randomMap, customMap;
     private JLabel header;
 
     public InputSizeFrame(GameController mainGame)
@@ -32,15 +32,22 @@ public class InputSizeFrame extends JFrame {
         inputPanel.setBackground(Color.darkGray);
         
         inputText = new JTextField(1);
-        inputText.setBounds(252, 252, 32, 32);
+        inputText.setBounds(220, 225, 32, 32);
         inputText.setHorizontalAlignment(JTextField.CENTER);
         inputText.setFont(new Font("SansSerif", Font.BOLD, 20));
         inputPanel.add(inputText);
 
-        submit = new JButton("Submit");
-        submit.setBounds(284, 252, 96, 32);
-        submit.addMouseListener(gMouseAdapter(submit, mainGame));
-        inputPanel.add(submit);
+        randomMap = new JButton("Random Map");
+        randomMap.setName("random");
+        randomMap.setBounds(284, 252, 120, 32);
+        randomMap.addMouseListener(gMouseAdapter(randomMap, mainGame));
+        inputPanel.add(randomMap);
+
+        customMap = new JButton("Custom Map");
+        customMap.setName("custom");
+        customMap.setBounds(284, 204, 120, 32);
+        customMap.addMouseListener(gMouseAdapter(customMap, mainGame));
+        inputPanel.add(customMap);
 
         header = new JLabel(new ImageIcon("img/BoardSize.png"));
         header.setBounds(1*64, 1*64, 500, 150);
@@ -55,7 +62,12 @@ public class InputSizeFrame extends JFrame {
         return new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
                 if(!inputText.getText().isEmpty())
-                    mainGame.setGame(Integer.parseInt(inputText.getText()));
+                {
+                    if(button.getName().equals("random"))
+                        mainGame.setGame(Integer.parseInt(inputText.getText()), true);
+                    else
+                        mainGame.setGame(Integer.parseInt(inputText.getText()), false);
+                }
             }
         };
     }
