@@ -64,11 +64,7 @@ public class GameController {
         return new Thread(){
             public void run()
             {
-                int nActions;
-                if(mode == 'S')
-                    nActions = actions.size()-1;
-                else
-                    nActions = actions.size();
+                int nActions = actions.size();
                     
                 for(int i = 0; i < nActions; i++)
                 {
