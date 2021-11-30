@@ -14,7 +14,6 @@ public class RandomMiner extends Miner{
 
     public String startSearch(){
         Random rand = new Random();
-        Node previous = new Node(0, 0, this.getFront());
         int MAX_DEPTH = envGrid.getSize() * envGrid.getSize();
         if(MAX_DEPTH > 150)
             MAX_DEPTH = 150;
@@ -34,20 +33,18 @@ public class RandomMiner extends Miner{
                 case 1: rotate(); break;
                 case 2: scan(envGrid); break;
             }
-            bMetGoal = previous.getTerrain() == 'G';
-            bAlive = !(previous.getTerrain() == 'P');
-            if(!bMetGoal && bAlive){
-                envGrid.printGrid(this);
-                System.out.println();
-            }
+            bMetGoal = envGrid.getTerrain(col, row) == 'G';
+            bAlive = !(envGrid.getTerrain(col, row) == 'P');
+            envGrid.printGrid(this);
+            System.out.println();
             MAX_DEPTH--;
 
         }
         System.out.println("Rotates: "+this.getRotates()+", Scans: "+this.getScans()+", Moves: "+this.getMoves());
         
-        if (previous.getTerrain() == 'G')
+        if (bMetGoal)
             searchMsg = "Search successful";
-        else if (previous.getTerrain() == 'P')
+        else if (bAlive == false)
             searchMsg = "Game-over!";
         else // default message if search ended without miner landing in gold or pit
             searchMsg = "Ended search.";
