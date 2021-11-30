@@ -120,7 +120,6 @@ public class Grid {
 
     private void randomizeMap () {
         Random rand = new Random();
-        Boolean createdValidMap;
 
         do {
             initializeMap();
@@ -157,17 +156,26 @@ public class Grid {
 
                 addPit(pitX, pitY);
             }
+        } while ( !isValidMap() );
+    }
 
-            // check if the gold is surrounded by pits, making the map invalid
-            if (   (getTerrain(goldX+1, goldY) == 'P' || !tileIsInBounds(goldX+1, goldY))
-                && (getTerrain(goldX-1, goldY) == 'P' || !tileIsInBounds(goldX-1, goldY))
-                && (getTerrain(goldX, goldY+1) == 'P' || !tileIsInBounds(goldX, goldY+1))
-                && (getTerrain(goldX, goldY-1) == 'P' || !tileIsInBounds(goldX, goldY-1))   ) {
-                createdValidMap = false;
-                System.out.println("Map is not valid. Regenerating...");
-            } else
-                createdValidMap = true;
-        } while ( !createdValidMap );
+    public boolean isValidMap () {
+        // scenario: gold is surrounded by tiles with pits or out of bounds tiles
+        if (   (getTerrain(goldCol+1, goldRow) == 'P' || !tileIsInBounds(goldCol+1, goldRow))
+                && (getTerrain(goldCol-1, goldRow) == 'P' || !tileIsInBounds(goldCol-1, goldRow))
+                && (getTerrain(goldCol, goldRow+1) == 'P' || !tileIsInBounds(goldCol, goldRow+1))
+                && (getTerrain(goldCol, goldRow-1) == 'P' || !tileIsInBounds(goldCol, goldRow-1))   )
+            return false;
+
+        // scenario: spawn (0,0) is surrounded by pits
+        if ( getTerrain(1, 0) == 'P' && getTerrain(1, 0) == 'P' )
+            return false;
+
+        // scenario: not all required terrains were placed
+        if ( nGoldLeft != 0 || nBeaconsLeft != 0 || nPitsLeft != 0 )
+            return false;
+
+        return true;
     }
 
     public boolean tileIsInBounds(int col, int row) {
