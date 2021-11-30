@@ -1,5 +1,6 @@
 package Model;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class SmartMiner extends Miner {
     private Grid envGrid; // = environment, will only be used for scan; not the miner's copy of what it knows abt the environment
@@ -19,61 +20,68 @@ public class SmartMiner extends Miner {
      * @return the result of the search via a search message
      */
     public String startSearch() { // automatic search until miner finds gold;
-        Node search;
-        Node previous = new Node(0, 0, this.getFront());
-        int MAX_DEPTH = this.envGrid.getSize() * 2; // EDIT NOTE: temporary, just to prevent infinite loop (formula is random lang lol change if necessary)
+        Stack<Node> fringe = new Stack<Node>();
+        int nVisited = 0;
 
-        envGrid.printGrid(this); // print current state
+        fringe.add( new Node(0, 0, getFront(), null) );
+        envGrid.printGrid(this);
         System.out.println();
 
-        while (!bMetGoal && MAX_DEPTH > 0) {
-            search = getNextMove(previous);
-            // rotate to the direction of search then move
-            while ( this.getFront() != search.getFront() )
-                this.rotate();
-            this.move();
+        while ( !fringe.isEmpty() && !bMetGoal && nVisited < envGrid.getSize() * envGrid.getSize() ) {
+            System.out.println(fringe);
+            Node v = fringe.pop();
+            if (!v.isVisited()) {
+                if ( v.getParent() != null )
+                    moveTo(v);
+                v.markAsVisted();
+                nVisited++;
 
-            bMetGoal = previous.getTerrain() == 'G' || previous.getTerrain() == 'P';
-            if (!bMetGoal) {
-                previous = search;
-                envGrid.printGrid(this); // print current state
-                System.out.println();
+                if ( envGrid.getTerrain(get_col(), get_row()) == 'G' || envGrid.getTerrain(get_col(), get_row()) == 'P' )
+                    bMetGoal = true;
+                else {
+                    for (Node successor : createSuccessors(v))
+                        fringe.push(successor);
+                }
             }
-            MAX_DEPTH--;
+
+            envGrid.printGrid(this);
+            System.out.println();
         }
 
-        System.out.println("Rotates: "+this.getRotates()+", Scans: "+this.getScans()+", Moves: "+this.getMoves());
-        
         String searchMsg;
-        if (previous.getTerrain() == 'G')
+        if ( envGrid.getTerrain(get_col(), get_row()) == 'G' )
             searchMsg = "Search successful";
-        else if (previous.getTerrain() == 'P')
-            searchMsg = "Game-over!";
-        else // default message if search ended without miner landing in gold or pit
-            searchMsg = "Ended search.";
-        System.out.println(searchMsg);
+        else if ( envGrid.getTerrain(get_col(), get_row()) == 'P' )
+            searchMsg = "Game over";
+        else
+            searchMsg = "Ended search";
+        
         return searchMsg;
     }
 
-    public Node getNextMove(Node previous) {
-        if (bMetGoal)   return null;
-
-        ArrayList<Node> possibleMoves = createSuccessors(previous);
-        Node nextMove;
-        System.out.println("Possible moves: " + possibleMoves);
-
-        /* if there's more than one candidate for next move, only keep the most optimal move. (best case: 1 left, worst case: 3 left) */
-        if (possibleMoves.size() > 1)
-            possibleMoves = filterByScan(possibleMoves);
+    // returns true if move is successful
+    public boolean moveTo(Node targetNode) {
+        Direction moveDirection = null;
         
-        /* if there's more than one candidate for next move, only keep the most optimal direction (best case: 1 left, worst case: 0 left) */
-        if (possibleMoves.size() > 1)
-            nextMove = filterByDirection(possibleMoves);
-        else
-            nextMove = possibleMoves.get(0);
+        if (targetNode.getCol() == col) {
+            if (targetNode.getRow() == row-1)
+                moveDirection = Direction.NORTH;
+            else if (targetNode.getRow() == row+1)
+                moveDirection = Direction.SOUTH;
+        } else if (targetNode.getRow() == row) {
+            if (targetNode.getCol() == col-1)
+                moveDirection = Direction.WEST;
+            else if (targetNode.getCol() == col+1)
+                moveDirection = Direction.EAST;
+        }
 
-        System.out.println("Best move: " + nextMove);
-        return nextMove;
+        if (moveDirection == null)  return false;
+
+        // rotate until facing moveDirection then move
+        while ( getFront() != moveDirection )
+            rotate();
+        move();
+        return true;
     }
 
     /**
@@ -103,74 +111,27 @@ public class SmartMiner extends Miner {
                         return successors;
                     }
                 }
-            } else {
-                if ( child.getFront() == parent.getFront() )
-                    parent.setTerrain(parent.getScan());
-                child.setScan('0');
-            }
+            } 
             this.rotate();
+        }
+
+        /* sort successors from least priority to highest priority */
+        if (successors.size() > 1) {
+            for (int i = 0; i < successors.size(); i++) {
+                int index = i;
+                for (int j = i+1; j < successors.size(); j++) {
+                    if (successors.get(j).getPriorityValue() < successors.get(index).getPriorityValue())
+                        index = j;
+                }
+                Node temp = successors.get(index);
+                successors.set(index, successors.get(i));
+                successors.set(i, temp);
+            } 
         }
 
         return successors;
     }
 
-    /**
-     * Filters the ArrayList of nodes passed in the parameter and returns an ArrayList of the best nodes 
-     * based on scan. Priority of scans (from best to worst): 'G', 'B', 0, 'P'.
-     * @param candidates an ArrayList of nodes to filter
-     * @return an ArrayList of the best nodes based on scan
-     */
-    private ArrayList<Node> filterByScan(ArrayList<Node> candidates) {
-        char cBest = 'P';   // scan w/ least priority
-        for (Node candidate: candidates)
-            if ( getPriority( candidate.getScan() ) >= getPriority(cBest) )
-                cBest = candidate.getScan();
-
-        ArrayList<Node> bestRemaining = new ArrayList<>();
-        for (Node candidate: candidates)
-            if (candidate.getScan() == cBest)
-                bestRemaining.add(candidate);
-        return bestRemaining;
-    }
-
-    /**
-     * Filters the ArrayList of nodes passed in the parameter and returns the best Node based on the 
-     * Directions. Priority of Directions (from best to worst): EAST, SOUTH, WEST, NORTH.
-     * @param candidates an ArrayList of nodes to filter
-     * @return the best node based on direction
-     */
-    private Node filterByDirection(ArrayList<Node> candidates) {
-        Direction dBest = null;
-        for (Node candidate: candidates)
-            if ( getPriority( candidate.getFront() ) > getPriority(dBest) )
-                dBest = candidate.getFront();
-
-        for (Node candidate: candidates)
-            if (candidate.getFront() == dBest)
-                return candidate;
-        return null; // added to prevent compilation errors
-    }
-
-    private int getPriority (Direction direction) {
-        if (direction == null)  return 0;
-        switch (direction) {
-            case EAST:  return 4;
-            case SOUTH: return 3;
-            case WEST:  return 2;
-            case NORTH: return 1;
-            default:    return 0;   // added to prevent compilation error
-        }
-    }
-
-    private int getPriority (char cScan) {
-        switch (cScan) {
-            case 'G':   return 4;
-            case 'B':   return 3;
-            case 0:     return 2;
-            case 'P':   return 0;
-            default:    return 1;   // added to prevent compilation error
-        }
-    }
 
     private Direction getOpposite (Direction direction) {
         switch (direction) {
@@ -180,23 +141,5 @@ public class SmartMiner extends Miner {
             case NORTH: return Direction.SOUTH;
             default:    return Direction.SOUTH; // added to prevent compilation error
         }
-    }
-
-    private int evaluate (Node candidate) {
-        int scanPriority = 0, directionPriority = 0;
-        switch (candidate.getScan()) {
-            case 'G':   scanPriority = 3; break;
-            case 'B':   scanPriority = 2; break;
-            case 0:     scanPriority = 1; break;
-            case 'P':   scanPriority = 0; break;
-            default:    return -1;
-        }
-        switch (candidate.getFront()) {
-            case EAST:  directionPriority = 4; break;
-            case SOUTH: directionPriority = 3; break;
-            case WEST:  directionPriority = 2; break;
-            case NORTH: directionPriority = 1; break;
-        }
-        return (4 * scanPriority) + directionPriority;
     }
 }
