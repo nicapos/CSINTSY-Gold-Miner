@@ -189,6 +189,7 @@ public class SmartMiner extends Miner {
             case 'B':   scanPriority = 2; break;
             case 0:     scanPriority = 1; break;
             case 'P':   scanPriority = 0; break;
+            default:    return -1;
         }
         switch (candidate.getFront()) {
             case EAST:  directionPriority = 4; break;
