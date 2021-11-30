@@ -31,25 +31,33 @@ public class Grid {
             nBeaconsLeft = 1;
     }
 
-    public void addPit(int col, int row) {
-        if (nPitsLeft > 0) {
+    public boolean addPit(int col, int row) {
+        if (nPitsLeft > 0 && grid[row][col] == '0') {
             grid[row][col] = 'P';
             nPitsLeft--;
+            return true;
         }
+        else 
+            return false;
     }
 
-    public void addBeacon(int col, int row) {
-        if (nBeaconsLeft > 0) {
+    public boolean addBeacon(int col, int row) {
+        // pls add formula sa checker since beacon cant be too far from Gold
+        if (nBeaconsLeft > 0 && grid[row][col] == '0') {
             grid[row][col] = 'B';
             nBeaconsLeft--;
+            return true;
         }
+        return false;
     }
 
-    public void addGold(int col, int row) {
-        if (nGoldLeft > 0) {
+    public boolean addGold(int col, int row) {
+        if (nGoldLeft > 0 && grid[row][col] == '0') {
             grid[row][col] = 'G';
             nGoldLeft--;
+            return true;
         }
+        return false;
     }
 
     public int getSize() { return n; }
