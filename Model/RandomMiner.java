@@ -14,7 +14,11 @@ public class RandomMiner extends Miner{
 
     public String startSearch(){
         Random rand = new Random();
-        int MAX_DEPTH = envGrid.getSize() * envGrid.getSize();
+        int ran_num = 0;
+        do{
+            ran_num = rand.nextInt(64);
+        } while(ran_num == 0);
+        int MAX_DEPTH = ran_num * ran_num;
         if(MAX_DEPTH > 100)
             MAX_DEPTH = 100;
         String searchMsg = null;
