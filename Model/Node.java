@@ -7,7 +7,6 @@ public class Node {
     private Direction moveFront;
 
     private char cScan;
-    private char cTerrain;
 
     private boolean isVisited;
 
@@ -16,7 +15,6 @@ public class Node {
         this.row = row;
         this.moveFront = moveFront;
         cScan = '0';
-        cTerrain = '0';
         this.parent = parent;
     }
 
@@ -29,8 +27,6 @@ public class Node {
     public char getScan() { return cScan; }
 
     public Node getParent() { return parent; }
-
-    public char getTerrain() { return cTerrain; }
 
     public boolean isVisited() {
         return isVisited;
@@ -47,17 +43,6 @@ public class Node {
      */
     public void setScan(char scanResult) {
         this.cScan = scanResult;
-
-        if (this.moveFront == parent.getFront()) {
-            if (this.cScan != parent.getScan())
-                parent.setTerrain(parent.getScan());
-            else
-                parent.setTerrain((char)0);
-        }
-    }
-
-    public void setTerrain(char cTerrain) {
-        this.cTerrain = cTerrain;
     }
 
     /**

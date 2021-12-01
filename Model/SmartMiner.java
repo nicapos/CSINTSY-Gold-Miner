@@ -105,7 +105,7 @@ public class SmartMiner extends Miner {
                     successors.add(child);
 
                     /* stop scanning if found gold already or parent node is already in gold tile and return only the node which scanned gold */
-                    if (cScan == 'G' || parent.getTerrain() == 'G') {
+                    if (cScan == 'G' || parent.getScan() == 'G') {
                         successors.clear();
                         successors.add(child);
                         return successors;
