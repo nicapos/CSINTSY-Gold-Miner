@@ -178,6 +178,10 @@ public class Grid {
         return true;
     }
 
+    public void resetMap () {
+        initializeMap();
+    }
+
     public boolean tileIsInBounds(int col, int row) {
         return ((0 <= row && row < n) && (0 <= col && col < n));
     }

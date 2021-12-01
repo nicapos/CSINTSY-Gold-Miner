@@ -22,6 +22,8 @@ public class MapLocation extends JFrame{
     private JLabel pitLoc, beaconLoc, goldLoc;
     private JLabel pitCount, beaconCount, goldCount;
 
+    private final Font guiFont = new Font("SansSerif", Font.BOLD, 20);
+
     public MapLocation(int nPitsLeft, int nBeaconsLeft, GameController mainGame, Grid environment)
     {
         this.setTitle("Gold Miner");
@@ -43,13 +45,13 @@ public class MapLocation extends JFrame{
         pitX = new JTextField();
         pitX.setBounds(32, 64, 32, 32);
         pitX.setHorizontalAlignment(JTextField.CENTER);
-        pitX.setFont(new Font("SansSerif", Font.BOLD, 20));
+        pitX.setFont(guiFont);
         framePanel.add(pitX);
 
         pitY = new JTextField();
         pitY.setBounds(80, 64, 32, 32);
         pitY.setHorizontalAlignment(JTextField.CENTER);
-        pitY.setFont(new Font("SansSerif", Font.BOLD, 20));
+        pitY.setFont(guiFont);
         framePanel.add(pitY);
 
         pitButton = new JButton("Add");
@@ -69,13 +71,13 @@ public class MapLocation extends JFrame{
         bX = new JTextField();
         bX.setBounds(32, 160, 32, 32);
         bX.setHorizontalAlignment(JTextField.CENTER);
-        bX.setFont(new Font("SansSerif", Font.BOLD, 20));
+        bX.setFont(guiFont);
         framePanel.add(bX);
 
         bY = new JTextField();
         bY.setBounds(80, 160, 32, 32);
         bY.setHorizontalAlignment(JTextField.CENTER);
-        bY.setFont(new Font("SansSerif", Font.BOLD, 20));
+        bY.setFont(guiFont);
         framePanel.add(bY);
 
         beaconButton = new JButton("Add");
@@ -96,13 +98,13 @@ public class MapLocation extends JFrame{
         goldX = new JTextField();
         goldX.setBounds(32, 264, 32, 32);
         goldX.setHorizontalAlignment(JTextField.CENTER);
-        goldX.setFont(new Font("SansSerif", Font.BOLD, 20));
+        goldX.setFont(guiFont);
         framePanel.add(goldX);
 
         goldY = new JTextField();
         goldY.setBounds(80, 264, 32, 32);
         goldY.setHorizontalAlignment(JTextField.CENTER);
-        goldY.setFont(new Font("SansSerif", Font.BOLD, 20));
+        goldY.setFont(guiFont);
         framePanel.add(goldY);
 
         goldButton = new JButton("Add");
@@ -125,8 +127,12 @@ public class MapLocation extends JFrame{
                 {
                    if(environment.addPit(Integer.parseInt(pitX.getText()), Integer.parseInt(pitY.getText())))
                         pitCount.setText(String.valueOf(environment.getPitsLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
-                        mainGame.menuStart();
+                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
+                        if (environment.isValidMap())
+                            mainGame.menuStart();
+                        else
+                            environment.resetMap();
+                    }
                     pitX.setText(null);
                     pitY.setText(null);
                 }
@@ -134,8 +140,12 @@ public class MapLocation extends JFrame{
                 {
                     if(environment.addBeacon(Integer.parseInt(bX.getText()), Integer.parseInt(bY.getText())))
                         beaconCount.setText(String.valueOf(environment.getBeaconsLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
-                        mainGame.menuStart();
+                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
+                        if (environment.isValidMap())
+                            mainGame.menuStart();
+                        else
+                            environment.resetMap();
+                    }
                     bX.setText(null);
                     bY.setText(null);
                 }
@@ -143,8 +153,12 @@ public class MapLocation extends JFrame{
                 {
                     if(environment.addGold(Integer.parseInt(goldX.getText()), Integer.parseInt(goldY.getText())))
                         goldCount.setText(String.valueOf(environment.getGoldLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0)
-                        mainGame.menuStart();
+                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
+                        if (environment.isValidMap())
+                            mainGame.menuStart();
+                        else
+                            environment.resetMap();
+                    }
                     goldX.setText(null);
                     goldY.setText(null);
                 }
