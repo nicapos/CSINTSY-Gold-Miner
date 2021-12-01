@@ -127,12 +127,7 @@ public class MapLocation extends JFrame{
                 {
                    if(environment.addPit(Integer.parseInt(pitX.getText()), Integer.parseInt(pitY.getText())))
                         pitCount.setText(String.valueOf(environment.getPitsLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
-                        if (environment.isValidMap())
-                            mainGame.menuStart();
-                        else
-                            environment.resetMap();
-                    }
+                    
                     pitX.setText(null);
                     pitY.setText(null);
                 }
@@ -140,12 +135,7 @@ public class MapLocation extends JFrame{
                 {
                     if(environment.addBeacon(Integer.parseInt(bX.getText()), Integer.parseInt(bY.getText())))
                         beaconCount.setText(String.valueOf(environment.getBeaconsLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
-                        if (environment.isValidMap())
-                            mainGame.menuStart();
-                        else
-                            environment.resetMap();
-                    }
+             
                     bX.setText(null);
                     bY.setText(null);
                 }
@@ -153,14 +143,19 @@ public class MapLocation extends JFrame{
                 {
                     if(environment.addGold(Integer.parseInt(goldX.getText()), Integer.parseInt(goldY.getText())))
                         goldCount.setText(String.valueOf(environment.getGoldLeft()));
-                    if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
-                        if (environment.isValidMap())
-                            mainGame.menuStart();
-                        else
-                            environment.resetMap();
-                    }
+    
                     goldX.setText(null);
                     goldY.setText(null);
+                }
+                if(environment.getBeaconsLeft() == 0 && environment.getPitsLeft() == 0 && environment.getGoldLeft() == 0) {
+                    if (environment.isValidMap())
+                        mainGame.menuStart();
+                    else {
+                        environment.resetMap();
+                        pitCount.setText(String.valueOf(environment.getPitsLeft()));
+                        beaconCount.setText(String.valueOf(environment.getBeaconsLeft()));
+                        goldCount.setText(String.valueOf(environment.getGoldLeft()));
+                    }
                 }
                 
                 framePanel.revalidate();
